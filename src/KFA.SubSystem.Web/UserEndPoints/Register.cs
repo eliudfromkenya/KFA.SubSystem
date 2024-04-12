@@ -64,19 +64,18 @@ public class Register(IMediator mediator, IConfiguration config) : Endpoint<Regi
     if (result.IsSuccess)
     {
       var (user, loginId, rights) = result.Value;
-      var token = Login.GetToken(Config, user.Id, user.RoleId, loginId, rights ?? []);
-      ////var jwtToken = JWTBearer.CreateToken(
-      ////    signingKey: tokenSignature!,
-      ////    expireAt: DateTime.UtcNow.AddDays(1),
-      ////    permissions: rights!,
-      ////    claims: new Claim[]
-      ////    {
-      ////     new ("UserId", user.Id!) ,
-      ////      new ("LoginId", loginId!) ,
-      ////      new ("RoleId", user.RoleId!)
-      ////    });
+      var jwtToken = JWTBearer.CreateToken(
+          signingKey: tokenSignature!,
+          expireAt: DateTime.UtcNow.AddDays(1),
+          permissions: rights!,
+          claims: new Claim[]
+          {
+           new ("UserId", user.Id!) ,
+            new ("LoginId", loginId!) ,
+            new ("RoleId", user.RoleId!)
+          });
 
-      await SendAsync(new RegisterResponse(token, user.RoleId, user.Id, user.Contact, user.EmailAddress, user.ExpirationDate ?? new DateTime(1, 1, 1), user.IsActive == true, user.MaturityDate ?? new DateTime(1, 1, 1), user.NameOfTheUser, user.Narration, user.Username), cancellation: cancellationToken);
+      await SendAsync(new RegisterResponse(jwtToken, user.RoleId, user.Id, user.Contact, user.EmailAddress, user.ExpirationDate?? new DateTime(1,1,1), user.IsActive == true, user.MaturityDate ?? new DateTime(1, 1, 1), user.NameOfTheUser, user.Narration, user.Username), cancellation: cancellationToken);
     }
     else await SendErrorsAsync(statusCode: 500, cancellationToken);
   }

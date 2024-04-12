@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using KFA.SubSystem.Core.DTOs;
 using KFA.SubSystem.Globals;
 
@@ -28,7 +27,7 @@ public sealed record class VerificationRight : BaseModel
   [NotMapped]
   public string? User_Caption { get; set; }
 
-  [Required]
+  // [Required]
   [Column("user_role_id")]
   public string? UserRoleId { get; init; }
 
@@ -37,9 +36,9 @@ public sealed record class VerificationRight : BaseModel
   [NotMapped]
   public string? UserRole_Caption { get; set; }
 
-  [Required]
+  // [Required]
   [Column("verification_right_id")]
-  public override string? Id { get; set; }
+  public override string? Id { get; init; }
 
   [Column("verification_type_id")]
   public long VerificationTypeId { get; init; }

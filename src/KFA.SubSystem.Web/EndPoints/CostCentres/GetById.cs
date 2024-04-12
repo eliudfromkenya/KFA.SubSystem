@@ -2,34 +2,36 @@
 using KFA.SubSystem.Core;
 using KFA.SubSystem.Core.DTOs;
 using KFA.SubSystem.Core.Models;
+using KFA.SubSystem.Globals.DataLayer;
 using KFA.SubSystem.Infrastructure.Services;
 using KFA.SubSystem.UseCases.Models.Get;
-using KFA.SubSystem.Web.Endpoints.CostCentreEndpoints;
 using KFA.SubSystem.Web.Services;
 using MediatR;
 
 namespace KFA.SubSystem.Web.EndPoints.CostCentres;
 
 /// <summary>
-/// Get a CostCentre by integer ID.
+/// Get a cost centre by cost centre code.
 /// </summary>
 /// <remarks>
-/// Takes a positive integer ID and returns a matching CostCentre record.
+/// Takes cost centre code and returns a matching cost centre record.
 /// </remarks>
-public class GetById(IMediator mediator) : Endpoint<GetCostCentreByIdRequest, CostCentreRecord>
+public class GetById(IMediator mediator, IEndPointManager endPointManager) : Endpoint<GetCostCentreByIdRequest, CostCentreRecord>
 {
+  private const string EndPointId = "ENP-154";
+
   public override void Configure()
   {
     Get(CoreFunctions.GetURL(GetCostCentreByIdRequest.Route));
-    Permissions(UserRoleConstants.RIGHT_SYSTEM_ROUTINES, UserRoleConstants.ROLE_SUPER_ADMIN, UserRoleConstants.ROLE_SUPERVISOR, UserRoleConstants.ROLE_MANAGER);
-    Description(x => x.WithName("Get Cost Centre"));
+    Permissions([.. endPointManager.GetDefaultAccessRights(EndPointId), UserRoleConstants.ROLE_SUPER_ADMIN, UserRoleConstants.ROLE_ADMIN]);
+    Description(x => x.WithName("Get Cost Centre End Point"));
     Summary(s =>
     {
       // XML Docs are used by default but are overridden by these properties:
-      s.Summary = "Gets a cost centre by specified id";
-      s.Description = "Used to retrieved saved cost centre with the provided id";
-      s.ExampleRequest = new GetCostCentreByIdRequest { CostCentreCode = "id to retrieve" };
-      s.ResponseExamples[200] = new CostCentreRecord("Id", "Description", "narration", "Region", "supplier prefix", true,DateTime.UtcNow, DateTime.UtcNow);
+      s.Summary = $"[End Point - {EndPointId}] Gets cost centre by specified cost centre code";
+      s.Description = "This endpoint is used to retrieve cost centre with the provided cost centre code";
+      s.ExampleRequest = new GetCostCentreByIdRequest { CostCentreCode = "cost centre code to retrieve" };
+      s.ResponseExamples[200] = new CostCentreRecord("1000", "Description", "Narration", "Region", "Supplier Code Prefix", DateTime.Now, DateTime.Now);
     });
   }
 
@@ -38,7 +40,7 @@ public class GetById(IMediator mediator) : Endpoint<GetCostCentreByIdRequest, Co
   {
     if (string.IsNullOrWhiteSpace(request.CostCentreCode))
     {
-      AddError(request => request.CostCentreCode ?? "CostCentreCode", "Cost Centre Code of item to be retrieved is required please");
+      AddError(request => request.CostCentreCode, "The cost centre code of the record to be retrieved is required please");
       await SendErrorsAsync(statusCode: 400, cancellation: cancellationToken);
       return;
     }
@@ -50,18 +52,20 @@ public class GetById(IMediator mediator) : Endpoint<GetCostCentreByIdRequest, Co
     {
       result.Errors.ToList().ForEach(n => AddError(n));
       await ErrorsConverter.CheckErrors(HttpContext, result.Status, result.Errors, cancellationToken);
-      ThrowIfAnyErrors();
     }
+
+    ThrowIfAnyErrors();
 
     if (result.Status == ResultStatus.NotFound || result.Value == null)
     {
       await SendNotFoundAsync(cancellationToken);
       return;
     }
-    var value = result.Value;
+    var obj = result.Value;
     if (result.IsSuccess)
     {
-      Response = new CostCentreRecord(value?.Id, value?.Description, value?.Narration, value?.Region, value?.SupplierCodePrefix,true, value?.DateInserted___, value?.DateUpdated___);
+      Response = new CostCentreRecord(obj.Id, obj.Description, obj.Narration, obj.Region, obj.SupplierCodePrefix, obj.DateInserted___, obj.DateUpdated___);
+      return;
     }
   }
 }

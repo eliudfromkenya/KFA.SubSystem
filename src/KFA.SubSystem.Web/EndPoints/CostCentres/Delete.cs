@@ -1,34 +1,36 @@
 ﻿using Ardalis.Result;
 using KFA.SubSystem.Core;
 using KFA.SubSystem.Core.Models;
+using KFA.SubSystem.Globals.DataLayer;
 using KFA.SubSystem.Infrastructure.Services;
 using KFA.SubSystem.UseCases.Models.Delete;
-using KFA.SubSystem.Web.Endpoints.CostCentreEndpoints;
 using KFA.SubSystem.Web.Services;
 using MediatR;
 
 namespace KFA.SubSystem.Web.EndPoints.CostCentres;
 
 /// <summary>
-/// Delete a CostCentre.
+/// Delete a cost centre.
 /// </summary>
 /// <remarks>
-/// Delete a CostCentre by providing a valid integer id.
+/// Delete a cost centre by providing a valid cost centre code.
 /// </remarks>
-public class Delete(IMediator mediator) : Endpoint<DeleteCostCentreRequest>
+public class Delete(IMediator mediator, IEndPointManager endPointManager) : Endpoint<DeleteCostCentreRequest>
 {
+  private const string EndPointId = "ENP-152";
+
   public override void Configure()
   {
     Delete(CoreFunctions.GetURL(DeleteCostCentreRequest.Route));
-    Permissions(UserRoleConstants.RIGHT_SYSTEM_ROUTINES, UserRoleConstants.ROLE_SUPER_ADMIN, UserRoleConstants.ROLE_SUPERVISOR, UserRoleConstants.ROLE_MANAGER);
-    Description(x => x.WithName("Delete Cost Centre"));
+    Permissions([.. endPointManager.GetDefaultAccessRights(EndPointId), UserRoleConstants.ROLE_SUPER_ADMIN, UserRoleConstants.ROLE_ADMIN]);
+    Description(x => x.WithName("Delete Cost Centre End Point"));
     Summary(s =>
     {
       // XML Docs are used by default but are overridden by these properties:
-      s.Summary = "Delete a Cost Centre";
-      s.Description = "Used to delete cost centre with specified id(s)";
-      s.ExampleRequest = new DeleteCostCentreRequest { CostCentreCode = "AAA-01" };
-      s.ResponseExamples = new Dictionary<int, object> { { 200, new object() } };
+      s.Summary = $"[End Point - {EndPointId}] Delete cost centre";
+      s.Description = "This endpoint is used to delete cost centre with specified (provided) cost centre code(s)";
+      s.ExampleRequest = new DeleteCostCentreRequest { CostCentreCode = "AAA-01,AAA-02" };
+      s.ResponseExamples = new Dictionary<int, object> { { 204, new object() } };
     });
   }
 
@@ -38,7 +40,7 @@ public class Delete(IMediator mediator) : Endpoint<DeleteCostCentreRequest>
   {
     if (string.IsNullOrWhiteSpace(request.CostCentreCode))
     {
-      AddError(request => request.CostCentreCode ?? "Id", "Item to be deleted is required please");
+      AddError(request => request.CostCentreCode, "The cost centre code of the record to be deleted is required please");
       await SendErrorsAsync(statusCode: 400, cancellation: cancellationToken);
       return;
     }
@@ -50,8 +52,9 @@ public class Delete(IMediator mediator) : Endpoint<DeleteCostCentreRequest>
     {
       result.Errors.ToList().ForEach(n => AddError(n));
       await ErrorsConverter.CheckErrors(HttpContext, result.Status, result.Errors, cancellationToken);
-      ThrowIfAnyErrors();
     }
+
+    ThrowIfAnyErrors();
 
     if (result.Status == ResultStatus.NotFound)
     {

@@ -1,8 +1,6 @@
-﻿using FastEndpoints;
-using FluentValidation;
-using KFA.SubSystem.Infrastructure.Data.Config;
+﻿using FluentValidation;
 
-namespace KFA.SubSystem.Web.Endpoints.CostCentreEndpoints;
+namespace KFA.SubSystem.Web.EndPoints.CostCentres;
 
 /// <summary>
 /// See: https://fast-endpoints.com/docs/validation
@@ -11,17 +9,27 @@ public class UpdateCostCentreValidator : Validator<UpdateCostCentreRequest>
 {
   public UpdateCostCentreValidator()
   {
-    //RuleFor(x => x.CostCentreCode)
-    //  .NotEmpty()
-    //  .WithMessage("Cost centre code of the cost centre to update is required please")
-    //  .MinimumLength(2)
-    //  .MaximumLength(DataSchemaConstants.DEFAULT_NAME_LENGTH);
+    RuleFor(x => x.CostCentreCode)
+    .NotEmpty()
+    .WithMessage("Cost Centre Code is required.");
 
     RuleFor(x => x.Description)
-     .NotEmpty()
-     .WithMessage("Name of cost centre to update is required please.")
-     .MinimumLength(2)
-     .MaximumLength(DataSchemaConstants.DEFAULT_NAME_LENGTH);
+         .NotEmpty()
+         .WithMessage("Description is required.")
+         .MinimumLength(2)
+         .MaximumLength(255);
+
+    RuleFor(x => x.Narration)
+         .MinimumLength(2)
+         .MaximumLength(500);
+
+    RuleFor(x => x.Region)
+         .MinimumLength(2)
+         .MaximumLength(255);
+
+    RuleFor(x => x.SupplierCodePrefix)
+         .MinimumLength(2)
+         .MaximumLength(10);
 
     static bool checkIds(string? objectId, string? urlId)
     {
@@ -29,7 +37,7 @@ public class UpdateCostCentreValidator : Validator<UpdateCostCentreRequest>
     }
 
     RuleFor(x => x.CostCentreCode)
-      .Must((args, costCentreId) => checkIds(args.CostCentreCode, costCentreId))
-      .WithMessage("Route and body Ids must match; cannot update Id of an existing resource.");
+      .Must((args, id) => checkIds(args.CostCentreCode, id))
+      .WithMessage("Route and body Ids must match; cannot update (change) Id of an existing resource.");
   }
 }

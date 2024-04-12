@@ -12,29 +12,27 @@ namespace KFA.SubSystem.Globals;
 //     both GUID and int IDs, change to EntityBase<TId> and use TId as the type for
 //     Id.
 public abstract record class BaseModel : IAggregateRoot
-{
+  {
   private readonly List<DomainEventBase> _domainEvents = [];
-  private string? _id;
-
   [Key]
   [MaxLength(___PrimaryMaxLength___)]
   [Column("id")]
-  public virtual string? Id { get => _id; set => _id = value; }
+  public virtual string? Id { get; init; }
 
-  public BaseModel(string? id = null) => _id = id;
+  public BaseModel(string? id = null) => Id = id;
 
   [NotMapped]
   public IEnumerable<DomainEventBase> DomainEvents => _domainEvents.AsReadOnly();
 
   protected void RegisterDomainEvent(DomainEventBase domainEvent)
-  {
+    {
     _domainEvents.Add(domainEvent);
-  }
+    }
 
   internal void ClearDomainEvents()
-  {
+    {
     _domainEvents.Clear();
-  }
+    }
 
   public abstract object ToBaseDTO();
 
@@ -56,6 +54,8 @@ public abstract record class BaseModel : IAggregateRoot
   [NotMapped]
   [JsonIgnore]
   public object? ___Tag___ { get; set; }
+  //[Column("is_currently_enabled", Order = 103)]
+  //public bool IsCurrentlyEnabled { get; set; } = true;
 
   [Column("date_added", Order = 100)]
   public long? ___DateInserted___ { get; set; } = DateTime.Now.FromDateTime();
@@ -64,4 +64,4 @@ public abstract record class BaseModel : IAggregateRoot
   public long? ___DateUpdated___ { get; set; } = DateTime.Now.FromDateTime();
   [Column("originator_id", Order = 101)]
   public long? originator_id { get; set; } = 100000000023;
-}
+  }

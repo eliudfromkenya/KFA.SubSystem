@@ -1,36 +1,42 @@
-﻿using KFA.SubSystem.Core;
+using Ardalis.Result;
+using KFA.SubSystem.Core;
 using KFA.SubSystem.Core.DTOs;
 using KFA.SubSystem.Core.Models;
+using KFA.SubSystem.Globals.DataLayer;
 using KFA.SubSystem.Infrastructure.Services;
 using KFA.SubSystem.UseCases.ModelCommandsAndQueries;
 using KFA.SubSystem.UseCases.Models.List;
-using KFA.SubSystem.Web.Endpoints.CostCentreEndpoints;
 using KFA.SubSystem.Web.Services;
 using MediatR;
+using Newtonsoft.Json;
 
 namespace KFA.SubSystem.Web.EndPoints.CostCentres;
 
 /// <summary>
-/// List all CostCentres
+/// List all cost centres by specified conditions
 /// </summary>
 /// <remarks>
-/// List all CostCentres - returns a CostCentreListResponse containing the CostCentres.
+/// List all cost centres - returns a CostCentreListResponse containing the cost centres.
 /// </remarks>
-public class List(IMediator mediator) : Endpoint<ListParam, CostCentreListResponse>
+public class List(IMediator mediator, IEndPointManager endPointManager) : Endpoint<ListParam, CostCentreListResponse>
 {
-  const string Route = "/cost_centres";
+  private const string EndPointId = "ENP-155";
+  public const string Route = "/cost_centres";
+
   public override void Configure()
   {
     Get(CoreFunctions.GetURL(Route));
-    Permissions(UserRoleConstants.RIGHT_SYSTEM_ROUTINES, UserRoleConstants.ROLE_SUPER_ADMIN, UserRoleConstants.ROLE_SUPERVISOR, UserRoleConstants.ROLE_MANAGER);
-    Description(x => x.WithName("Get Cost Centres"));
+    Permissions([.. endPointManager.GetDefaultAccessRights(EndPointId), UserRoleConstants.ROLE_SUPER_ADMIN, UserRoleConstants.ROLE_ADMIN]);
+
+    Description(x => x.WithName("Get Cost Centres List End Point"));
+
     Summary(s =>
     {
       // XML Docs are used by default but are overridden by these properties:
-      s.Summary = "Retrieves list of cost centres as specified";
-      s.Description = "Returns all cost centres within specified range";
-      s.ResponseExamples[200] = new CostCentreListResponse { CostCentres = [] };
-      s.ExampleRequest = new ListParam { Skip = 0, Take = 1000 };
+      s.Summary = $"[End Point - {EndPointId}] Retrieves list of cost centres as specified";
+      s.Description = "Returns all cost centres as specified, i.e filter to specify which records or rows to return, order to specify order criteria";
+      s.ResponseExamples[200] = new CostCentreListResponse { CostCentres = [new CostCentreRecord("1000", "Description", "Narration", "Region", "Supplier Code Prefix", DateTime.Now, DateTime.Now)] };
+      s.ExampleRequest = new ListParam { Param = JsonConvert.SerializeObject(new FilterParam { Predicate = "Id.Trim().StartsWith(@0) and Id >= @1", SelectColumns = "new {Id, Narration}", Parameters = ["S3", "3100"], OrderByConditions = ["Id", "Narration"] }), Skip = 0, Take = 1000 };
     });
   }
 
@@ -38,20 +44,22 @@ public class List(IMediator mediator) : Endpoint<ListParam, CostCentreListRespon
     CancellationToken cancellationToken)
   {
     var command = new ListModelsQuery<CostCentreDTO, CostCentre>(CreateEndPointUser.GetEndPointUser(User), request);
-    var result = await mediator.Send(command, cancellationToken);
+    var ans = await mediator.Send(command, cancellationToken);
+    var result = Result<List<CostCentreDTO>>.Success(ans.Select(v => (CostCentreDTO)v).ToList());
 
     if (result.Errors.Any())
     {
       result.Errors.ToList().ForEach(n => AddError(n));
       await ErrorsConverter.CheckErrors(HttpContext, result.Status, result.Errors, cancellationToken);
-      ThrowIfAnyErrors();
     }
+
+    ThrowIfAnyErrors();
 
     if (result.IsSuccess)
     {
       Response = new CostCentreListResponse
       {
-        CostCentres = result.Value.Select(c => new CostCentreRecord(c?.Id, c?.Description, c?.Narration, c?.Region, c?.SupplierCodePrefix,c?.IsActive, c?.DateInserted___, c?.DateUpdated___)).ToList()
+        CostCentres = result.Value.Select(obj => new CostCentreRecord(obj.Id, obj.Description, obj.Narration, obj.Region, obj.SupplierCodePrefix, obj.DateInserted___, obj.DateUpdated___)).ToList()
       };
     }
   }

@@ -1,6 +1,4 @@
-﻿using KFA.SubSystem.Web.EndPoints.CostCentres;
-
-namespace KFA.SubSystem.Web.Endpoints.CostCentreEndpoints;
+﻿namespace KFA.SubSystem.Web.EndPoints.CostCentres;
 
 public class UpdateCostCentreResponse
 {

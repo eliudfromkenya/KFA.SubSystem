@@ -1,10 +1,14 @@
-﻿namespace KFA.SubSystem.UseCases.ModelCommandsAndQueries;
+﻿
+using Newtonsoft.Json;
 
-public record class ListParam
+namespace KFA.SubSystem.UseCases.ModelCommandsAndQueries;
+
+public class ListParam
 {
-  public FilterParam? FilterParam { get; init; } = null;
-  public int? Skip { get; init; } = 0;
-  public int? Take { get; init; } = 1000;
+  public FilterParam? FilterParam => string.IsNullOrWhiteSpace(Param) ? null : JsonConvert.DeserializeObject<FilterParam>(Param!);
+  public string? Param { get; set; }
+  public int? Skip { get; set; } = 0;
+  public int? Take { get; set; } = 1000;
 }
 
 public record class FilterParam

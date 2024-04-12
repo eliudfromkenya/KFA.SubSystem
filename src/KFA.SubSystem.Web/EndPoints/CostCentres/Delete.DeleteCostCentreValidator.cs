@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace KFA.SubSystem.Web.Endpoints.CostCentreEndpoints;
+namespace KFA.SubSystem.Web.EndPoints.CostCentres;
 
 /// <summary>
 /// See: https://fast-endpoints.com/docs/validation
@@ -10,6 +10,9 @@ public class DeleteCostCentreValidator : Validator<DeleteCostCentreRequest>
   public DeleteCostCentreValidator()
   {
     RuleFor(x => x.CostCentreCode)
-      .NotEmpty();
+      .NotEmpty()
+      .WithMessage("The cost centre code to be deleted is required please.")
+      .MinimumLength(2)
+      .MaximumLength(30);
   }
 }

@@ -1,12 +1,12 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using Ardalis.Result;
 using System.Security.Claims;
-using System.Text;
 using FastEndpoints.Security;
 using KFA.SubSystem.Core;
+using KFA.SubSystem.Core.DTOs;
+using KFA.SubSystem.Globals.Models;
 using KFA.SubSystem.Infrastructure.Services;
 using KFA.SubSystem.UseCases.Users;
 using MediatR;
-using Microsoft.IdentityModel.Tokens;
 
 namespace KFA.SubSystem.Web.UserEndPoints;
 
@@ -44,35 +44,28 @@ public class Login : Endpoint<LoginRequest, LoginResponse>
     });
   }
 
-  internal static string GetToken(IConfiguration config, string? userId, string? userRole, string? loginId, string?[] userRights)
-  {
-    var tokenSignature = config?.GetValue<string>("Auth:TokenSigningKey")!;
-    var tokenHandler = new JwtSecurityTokenHandler();
-
-    var tokenKey = Encoding.ASCII.GetBytes(tokenSignature);
-    var token = tokenHandler.CreateToken(new SecurityTokenDescriptor()
-    {
-      Expires = DateTime.UtcNow.AddDays(1),
-      EncryptingCredentials = new EncryptingCredentials(new SymmetricSecurityKey(tokenKey), "Sha512"),
-      Claims = new Dictionary<string, object>
-          {
-            { "UserId", userId! } ,
-            { "LoginId", loginId! },
-            { "RoleId", userRole! },
-            { "Permissions", userRights! }
-          }
-    });
-    return token?.ToString() ?? string.Empty;
-  }
-
   public override async Task HandleAsync(
     LoginRequest request,
     CancellationToken cancellationToken)
   {
-    var tokenSignature = Config.GetValue<string>("Auth:TokenSigningKey")!;
+    var tokenSignature = Config.GetValue<string>("Auth:TokenSigningKey");
 
     var command = new UserLoginCommand(request.Username!, request.Password!, request.Device);
-    var result = await _mediator.Send(command, cancellationToken);
+    Result<LoginResult>? result = null;
+    try
+    {
+      result = await _mediator.Send(command, cancellationToken);
+    }
+    catch (UnauthorizedAccessException ex)
+    {
+      await ErrorsConverter.CheckErrors(HttpContext, ResultStatus.Unauthorized, [ex.Message], cancellationToken);
+      return;
+    }
+    catch (Exception ex)
+    {
+      await ErrorsConverter.CheckErrors(HttpContext, ResultStatus.CriticalError, [ex.Message], cancellationToken);
+      return;
+    }
 
     if (result.Errors.Any())
     {
@@ -83,8 +76,18 @@ public class Login : Endpoint<LoginRequest, LoginResponse>
     if (result.IsSuccess)
     {
       var value = result.Value;
-      var token = GetToken(Config, value.UserId, value.UserRole, value.LoginId, value.UserRights);
-      await SendAsync(new LoginResponse(value.LoginId, token, value.UserId, value.UserRole, DateTime.Now, value.UserRights), cancellation: cancellationToken);
+      var jwtToken = JWTBearer.CreateToken(
+          signingKey: tokenSignature!,
+          expireAt: DateTime.UtcNow.AddDays(30),
+          permissions: value.UserRights!,
+          claims: new Claim[]
+          {
+            new ("UserId", value.UserId!) ,
+            new ("LoginId", value.LoginId!) ,
+            new ("RoleId", value.UserRole!)
+          });
+
+      await SendAsync(new LoginResponse(value.LoginId, jwtToken, value.UserId, value.UserRole, DateTime.Now, value.UserRights, value.User as SystemUserDTO), cancellation: cancellationToken);
     }
     else
     {

@@ -2,10 +2,10 @@
 using KFA.SubSystem.Core;
 using KFA.SubSystem.Core.DTOs;
 using KFA.SubSystem.Core.Models;
+using KFA.SubSystem.Globals.DataLayer;
 using KFA.SubSystem.Infrastructure.Services;
 using KFA.SubSystem.UseCases.Models.Get;
 using KFA.SubSystem.UseCases.Models.Update;
-using KFA.SubSystem.Web.Endpoints.CostCentreEndpoints;
 using KFA.SubSystem.Web.Services;
 using Mapster;
 using MediatR;
@@ -13,26 +13,28 @@ using MediatR;
 namespace KFA.SubSystem.Web.EndPoints.CostCentres;
 
 /// <summary>
-/// Update an existing CostCentre.
+/// Update an existing cost centre.
 /// </summary>
 /// <remarks>
-/// Update an existing CostCentre by providing a fully defined replacement set of values.
+/// Update an existing cost centre by providing a fully defined replacement set of values.
 /// See: https://stackoverflow.com/questions/60761955/rest-update-best-practice-put-collection-id-without-id-in-body-vs-put-collecti
 /// </remarks>
-public class Update(IMediator mediator) : Endpoint<UpdateCostCentreRequest, UpdateCostCentreResponse>
+public class Update(IMediator mediator, IEndPointManager endPointManager) : Endpoint<UpdateCostCentreRequest, UpdateCostCentreResponse>
 {
+  private const string EndPointId = "ENP-157";
+
   public override void Configure()
   {
     Put(CoreFunctions.GetURL(UpdateCostCentreRequest.Route));
-    Permissions(UserRoleConstants.RIGHT_SYSTEM_ROUTINES, UserRoleConstants.ROLE_SUPER_ADMIN, UserRoleConstants.ROLE_SUPERVISOR, UserRoleConstants.ROLE_MANAGER);
-    Description(x => x.WithName("Update Cost Centre"));
+    Permissions([.. endPointManager.GetDefaultAccessRights(EndPointId), UserRoleConstants.ROLE_SUPER_ADMIN, UserRoleConstants.ROLE_ADMIN]);
+    Description(x => x.WithName("Update Cost Centre End Point"));
     Summary(s =>
     {
       // XML Docs are used by default but are overridden by these properties:
-      s.Summary = "Update a Cost Centre";
-      s.Description = "Create a new CostCentre. A valid name is required. hgklgjk";
-      s.ExampleRequest = new CreateCostCentreRequest { Description = "CostCentre Name" };
-      s.ResponseExamples[200] = new CreateCostCentreResponse { };
+      s.Summary = $"[End Point - {EndPointId}] Update a full Cost Centre";
+      s.Description = "This endpoint is used to update  cost centre, making a full replacement of cost centre with a specifed valuse. A valid cost centre is required.";
+      s.ExampleRequest = new UpdateCostCentreRequest { CostCentreCode = "1000", Description = "Description", Narration = "Narration", Region = "Region", SupplierCodePrefix = "Supplier Code Prefix" };
+      s.ResponseExamples[200] = new UpdateCostCentreResponse(new CostCentreRecord("1000", "Description", "Narration", "Region", "Supplier Code Prefix", DateTime.Now, DateTime.Now));
     });
   }
 
@@ -42,7 +44,7 @@ public class Update(IMediator mediator) : Endpoint<UpdateCostCentreRequest, Upda
   {
     if (string.IsNullOrWhiteSpace(request.CostCentreCode))
     {
-      AddError(request => request.CostCentreCode ?? "Id", "Id of item to be updated is required please");
+      AddError(request => request.CostCentreCode, "The cost centre code of the record to be updated is required please");
 
       await SendErrorsAsync(statusCode: 400, cancellation: cancellationToken);
 
@@ -56,7 +58,6 @@ public class Update(IMediator mediator) : Endpoint<UpdateCostCentreRequest, Upda
     {
       resultObj.Errors.ToList().ForEach(n => AddError(n));
       await ErrorsConverter.CheckErrors(HttpContext, resultObj.Status, resultObj.Errors, cancellationToken);
-      ThrowIfAnyErrors();
     }
 
     if (resultObj.Status == ResultStatus.NotFound)
@@ -75,9 +76,12 @@ public class Update(IMediator mediator) : Endpoint<UpdateCostCentreRequest, Upda
       return;
     }
 
+    ThrowIfAnyErrors();
+
+    var obj = result.Value;
     if (result.IsSuccess)
     {
-      Response = new UpdateCostCentreResponse(new CostCentreRecord(value?.Id, value?.Description, value?.Narration, value?.Region, value?.SupplierCodePrefix, value?.IsActive, value?.DateInserted___, value?.DateUpdated___));
+      Response = new UpdateCostCentreResponse(new CostCentreRecord(obj.Id, obj.Description, obj.Narration, obj.Region, obj.SupplierCodePrefix, obj.DateInserted___, obj.DateUpdated___));
       return;
     }
   }

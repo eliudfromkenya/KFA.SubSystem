@@ -2,6 +2,7 @@
 using Ardalis.SharedKernel;
 using KFA.SubSystem.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.DataEncryption;
 
 namespace KFA.SubSystem.Infrastructure.Data;
 
@@ -9,25 +10,20 @@ public class AppDbContext : DbContext
 {
   private readonly IDomainEventDispatcher? _dispatcher;
 
-  //static object obj = new object();
   public AppDbContext(DbContextOptions<AppDbContext> options,
     IDomainEventDispatcher? dispatcher)
       : base(options)
   {
     _dispatcher = dispatcher;
-    //lock (obj)
-    {
-      //this.Database.EnsureCreated();
-    }
   }
-
-  //public DbSet<Contributor> Contributors => Set<Contributor>();
+  private static MsEncryptionProvider _provider = new ();
   public DbSet<CommandDetail> CommandDetails { get; set; }
   public DbSet<CommunicationMessage> CommunicationMessages { get; set; }
   public DbSet<ComputerAnydesk> ComputerAnydesks { get; set; }
   public DbSet<CostCentre> CostCentres { get; set; }
   public DbSet<DataDevice> DataDevices { get; set; }
   public DbSet<DeviceGuid> DeviceGuids { get; set; }
+  public DbSet<DefaultAccessRight> DefaultAccessRights { get; set; }
   public DbSet<ItemGroup> ItemGroups { get; set; }
   public DbSet<LeasedPropertiesAccount> LeasedPropertiesAccounts { get; set; }
   public DbSet<LedgerAccount> LedgerAccounts { get; set; }
@@ -47,16 +43,40 @@ public class AppDbContext : DbContext
   public DbSet<VerificationRight> VerificationRights { get; set; }
   public DbSet<VerificationType> VerificationTypes { get; set; }
   public DbSet<Verification> Verifications { get; set; }
+  public DbSet<DuesPaymentDetail> DuesPaymentDetails { get; set; }
+  public DbSet<EmployeeDetail> EmployeeDetails { get; set; }
+  public DbSet<IssuesAttachment> IssuesAttachments { get; set; }
+  public DbSet<IssuesProgress> IssuesProgresses { get; set; }
+  public DbSet<IssuesSubmission> IssuesSubmissions { get; set; }
+  public DbSet<PayrollGroup> PayrollGroups { get; set; }
+  public DbSet<PriceChangeRequest> PriceChangeRequests { get; set; }
+  public DbSet<ProjectIssue> ProjectIssues { get; set; }
+  public DbSet<StaffGroup> StaffGroups { get; set; }
+  public DbSet<StockItemCodesRequest> StockItemCodesRequests { get; set; }
+  public DbSet<VendorCodesRequest> VendorCodesRequests { get; set; }
+  public DbSet<ActualBudgetVariance> ActualBudgetVariances { get; set; }
+  public DbSet<ActualBudgetVariancesBatchHeader> ActualBudgetVariancesBatchHeaders { get; set; }
+  public DbSet<CountSheetBatch> CountSheetBatches { get; set; }
+  public DbSet<ExpenseBudgetBatchHeader> ExpenseBudgetBatchHeaders { get; set; }
+  public DbSet<ExpensesBudgetDetail> ExpensesBudgetDetails { get; set; }
+  public DbSet<PurchasesBudgetBatchHeader> PurchasesBudgetBatchHeaders { get; set; }
+  public DbSet<PurchasesBudgetDetail> PurchasesBudgetDetails { get; set; }
+  public DbSet<SalesBudgetBatchHeader> SalesBudgetBatchHeaders { get; set; }
+  public DbSet<SalesBudgetDetail> SalesBudgetDetails { get; set; }
+  public DbSet<StockCountSheet> StockCountSheets { get; set; }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);
+    _provider ??= new MsEncryptionProvider();
+    modelBuilder.UseEncryption(_provider);
     modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
   }
 
   public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
   {
     int result = await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+    _provider ??= new MsEncryptionProvider();
 
     // ignore events if no dispatcher provided
     if (_dispatcher == null) return result;

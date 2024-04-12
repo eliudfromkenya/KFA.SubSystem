@@ -6,4 +6,4 @@ using KFA.SubSystem.UseCases.ModelCommandsAndQueries;
 
 namespace KFA.SubSystem.UseCases.Models.List;
 
-public record ListModelsQuery<T, X>(EndPointUser user, ListParam param) : IQuery<Result<List<T>>> where T : BaseDTO<X>, new() where X : BaseModel, new();
+public record ListModelsQuery<T, X>(EndPointUser user, ListParam param) : IQuery<List<X>> where T : BaseDTO<X>, new() where X : BaseModel, new();

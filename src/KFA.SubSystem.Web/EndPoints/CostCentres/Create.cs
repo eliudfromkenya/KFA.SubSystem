@@ -1,9 +1,9 @@
 ﻿using KFA.SubSystem.Core;
 using KFA.SubSystem.Core.DTOs;
 using KFA.SubSystem.Core.Models;
+using KFA.SubSystem.Globals.DataLayer;
 using KFA.SubSystem.Infrastructure.Services;
 using KFA.SubSystem.UseCases.Models.Create;
-using KFA.SubSystem.Web.Endpoints.CostCentreEndpoints;
 using KFA.SubSystem.Web.Services;
 using Mapster;
 using MediatR;
@@ -14,25 +14,28 @@ namespace KFA.SubSystem.Web.EndPoints.CostCentres;
 /// Create a new CostCentre
 /// </summary>
 /// <remarks>
-/// Creates a new CostCentre given a name.
+/// Creates a new cost centre given by given details.
 /// </remarks>
-public class Create(IMediator mediator) : Endpoint<CreateCostCentreRequest, CreateCostCentreResponse>
+public class Create(IMediator mediator, IEndPointManager endPointManager) : Endpoint<CreateCostCentreRequest, CreateCostCentreResponse>
 {
+  private const string EndPointId = "ENP-151";
+
   public override void Configure()
   {
     Post(CoreFunctions.GetURL(CreateCostCentreRequest.Route));
-    Permissions(UserRoleConstants.RIGHT_SYSTEM_ROUTINES, UserRoleConstants.ROLE_SUPER_ADMIN, UserRoleConstants.ROLE_SUPERVISOR, UserRoleConstants.ROLE_MANAGER);
-    Description(x => x.WithName("Add Cost Centre"));
+    Permissions([.. endPointManager.GetDefaultAccessRights(EndPointId), UserRoleConstants.ROLE_SUPER_ADMIN, UserRoleConstants.ROLE_ADMIN]);
+    Description(x => x.WithName("Add Cost Centre End Point"));
 
     Summary(s =>
     {
       // XML Docs are used by default but are overridden by these properties:
-      s.Summary = "User to create a new cost centre";
-      s.Description = "Cost centre to be created details are provided here";
-      s.ExampleRequest = new CreateCostCentreRequest { CostCentreCode = "1000", Description = "Cost Centre Name" };
-      s.ResponseExamples[200] = new CreateCostCentreResponse("1100", true, "Cost Centre Name", "Narration", "Region", "S3A", DateTime.UtcNow, DateTime.UtcNow);
+      s.Summary = $"[End Point - {EndPointId}] Used to create a new cost centre";
+      s.Description = "This endpoint is used to create a new  cost centre. Here details of cost centre to be created is provided";
+      s.ExampleRequest = new CreateCostCentreRequest { CostCentreCode = "1000", Description = "Description", Narration = "Narration", Region = "Region", SupplierCodePrefix = "Supplier Code Prefix" };
+      s.ResponseExamples[200] = new CreateCostCentreResponse("1000", "Description", "Narration", "Region", "Supplier Code Prefix", DateTime.Now, DateTime.Now);
     });
   }
+
   public override async Task HandleAsync(
     CreateCostCentreRequest request,
     CancellationToken cancellationToken)
@@ -46,14 +49,15 @@ public class Create(IMediator mediator) : Endpoint<CreateCostCentreRequest, Crea
     {
       result.Errors.ToList().ForEach(n => AddError(n));
       await ErrorsConverter.CheckErrors(HttpContext, result.Status, result.Errors, cancellationToken);
-      ThrowIfAnyErrors();
     }
+
+    ThrowIfAnyErrors();
 
     if (result.IsSuccess)
     {
       if (result?.Value?.FirstOrDefault() is CostCentreDTO obj)
       {
-        Response = new CreateCostCentreResponse(obj.Id,obj.IsActive, obj.Description!, obj.Narration, obj.Region, obj.SupplierCodePrefix, obj.DateInserted___, obj.DateUpdated___);
+        Response = new CreateCostCentreResponse(obj.Id, obj.Description, obj.Narration, obj.Region, obj.SupplierCodePrefix, obj.DateInserted___, obj.DateUpdated___);
         return;
       }
     }

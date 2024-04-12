@@ -15,331 +15,244 @@ namespace KFA.SubSystem.Web.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.0-rc.2.23480.1");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("KFA.SubSystem.Core.ContributorAggregate.Contributor", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.CommandDetail", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("date_added")
-                        .HasColumnOrder(100);
-
-                    b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("date_updated")
-                        .HasColumnOrder(101);
-
-                    b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
-                        .HasColumnOrder(103);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Contributors");
-                });
-
-            modelBuilder.Entity("KFA.SubSystem.Core.Models.CommunicationMessage", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("message_id");
-
-                    b.Property<byte[]>("Attachments")
-                        .HasColumnType("BLOB")
-                        .HasColumnName("attachments");
-
-                    b.Property<string>("Details")
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("details");
-
-                    b.Property<string>("From")
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("from");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("message");
-
-                    b.Property<byte>("MessageType")
-                        .HasMaxLength(255)
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("message_type");
-
-                    b.Property<string>("Narration")
-                        .HasMaxLength(500)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("narration");
-
-                    b.Property<byte?>("Status")
-                        .HasMaxLength(255)
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("status");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("title");
-
-                    b.Property<string>("To")
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("to");
-
-                    b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("date_added")
-                        .HasColumnOrder(100);
-
-                    b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("date_updated")
-                        .HasColumnOrder(101);
-
-                    b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
-                        .HasColumnOrder(103);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("tbl_communication_messages");
-                });
-
-            modelBuilder.Entity("KFA.SubSystem.Core.Models.DataDevice", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("device_id");
-
-                    b.Property<string>("DeviceCaption")
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("device_caption");
-
-                    b.Property<string>("DeviceCode")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("device_code");
-
-                    b.Property<string>("DeviceName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("device_name");
-
-                    b.Property<string>("DeviceNumber")
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("device_number");
-
-                    b.Property<string>("DeviceRight")
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("device_right");
-
-                    b.Property<string>("StationID")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("station_id");
-
-                    b.Property<string>("Station_Caption")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("TypeOfDevice")
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("type_of_device");
-
-                    b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("date_added")
-                        .HasColumnOrder(100);
-
-                    b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("date_updated")
-                        .HasColumnOrder(101);
-
-                    b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
-                        .HasColumnOrder(103);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StationID");
-
-                    b.ToTable("tbl_data_devices");
-                });
-
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.CommandDetail", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("command_id");
 
                     b.Property<string>("Action")
                         .IsRequired()
                         .HasMaxLength(25)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(25)")
                         .HasColumnName("action");
 
                     b.Property<string>("ActiveState")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(10)")
                         .HasColumnName("active_state");
 
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasMaxLength(25)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(25)")
                         .HasColumnName("category");
 
                     b.Property<string>("CommandName")
                         .IsRequired()
                         .HasMaxLength(25)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(25)")
                         .HasColumnName("command_name");
 
                     b.Property<string>("CommandText")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("command_text");
 
-                    b.Property<long>("ImageId")
-                        .HasColumnType("INTEGER")
+                    b.Property<long?>("ImageId")
+                        .IsRequired()
+                        .HasColumnType("bigint")
                         .HasColumnName("image_id");
 
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("image_path");
 
-                    b.Property<bool>("IsEnabled")
-                        .HasColumnType("INTEGER")
+                    b.Property<bool?>("IsEnabled")
+                        .IsRequired()
+                        .HasColumnType("tinyint(1)")
                         .HasColumnName("is_enabled");
 
-                    b.Property<bool>("IsPublished")
-                        .HasColumnType("INTEGER")
+                    b.Property<bool?>("IsPublished")
+                        .IsRequired()
+                        .HasColumnType("tinyint(1)")
                         .HasColumnName("is_published");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<string>("ShortcutKey")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("shortcut_key");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
                     b.ToTable("tbl_command_details");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.ComputerAnydesk", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.CommunicationMessage", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("message_id");
+
+                    b.Property<byte[]>("Attachments")
+                        .HasColumnType("longblob")
+                        .HasColumnName("attachments");
+
+                    b.Property<string>("Details")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("details");
+
+                    b.Property<string>("From")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("from");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("message");
+
+                    b.Property<byte>("MessageType")
+                        .HasMaxLength(255)
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("message_type");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<byte?>("Status")
+                        .HasMaxLength(255)
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("status");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("title");
+
+                    b.Property<string>("To")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("to");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tbl_communication_messages");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ComputerAnydesk", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("anydesk_id");
 
                     b.Property<string>("AnyDeskNumber")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(100)")
                         .HasColumnName("anydesk_number");
 
                     b.Property<string>("CostCentreCode")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("cost_centre_code");
-
-                    b.Property<string>("CostCentre_Caption")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("DeviceName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("device_name");
 
                     b.Property<string>("NameOfUser")
                         .HasMaxLength(100)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(100)")
                         .HasColumnName("name_of_user");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<string>("Password")
                         .HasMaxLength(100)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(100)")
                         .HasColumnName("password");
 
                     b.Property<byte?>("Type")
                         .HasMaxLength(255)
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("tinyint unsigned")
                         .HasColumnName("type");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
@@ -348,115 +261,614 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_computer_anydesks");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.CostCentre", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.CostCentre", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("cost_centre_code");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
                         .HasColumnName("description");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("is_active");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<string>("Region")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("region");
 
                     b.Property<string>("SupplierCodePrefix")
                         .HasMaxLength(10)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(10)")
                         .HasColumnName("supplier_code_prefix");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
                     b.ToTable("tbl_cost_centres");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.DeviceGuid", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.DataDevice", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("guid");
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("device_id");
+
+                    b.Property<string>("DeviceCaption")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("device_caption");
+
+                    b.Property<string>("DeviceCode")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("device_code");
+
+                    b.Property<string>("DeviceName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("device_name");
+
+                    b.Property<string>("DeviceNumber")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("device_number");
+
+                    b.Property<string>("DeviceRight")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("device_right");
+
+                    b.Property<string>("StationID")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("station");
+
+                    b.Property<string>("TypeOfDevice")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("type_of_device");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StationID");
+
+                    b.ToTable("tbl_data_devices");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.DeviceGuid", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("guid");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
                     b.ToTable("tbl_device_guids");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.ItemGroup", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.DuesPaymentDetail", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("payment_id");
+
+                    b.Property<string>("Amount")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("amount");
+
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("date");
+
+                    b.Property<string>("DocumentNo")
+                        .HasMaxLength(25)
+                        .HasColumnType("varchar(25)")
+                        .HasColumnName("document_no");
+
+                    b.Property<string>("EmployeeDetailId")
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("EmployeeId")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("employee_id");
+
+                    b.Property<string>("IsFinalPayment")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("is_final_payment");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<string>("OpeningBalance")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("opening_balance");
+
+                    b.Property<string>("PaidTo")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("paid_to");
+
+                    b.Property<string>("PaymentType")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("payment_type");
+
+                    b.Property<string>("ProcessedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("processed_by");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeDetailId");
+
+                    b.ToTable("tbl_dues_payment_details");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.EmployeeDetail", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("employee_id");
+
+                    b.Property<string>("AmountDue")
+                        .HasColumnType("longtext")
+                        .HasColumnName("amount_due");
+
+                    b.Property<string>("Classfication")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("classfication");
+
+                    b.Property<string>("CostCentreCode")
+                        .HasMaxLength(5)
+                        .HasColumnType("varchar(5)")
+                        .HasColumnName("cost_centre_code");
+
+                    b.Property<string>("CostCentreId")
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("Date")
+                        .HasColumnType("longtext")
+                        .HasColumnName("date");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("email");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("full_name");
+
+                    b.Property<string>("Gender")
+                        .HasMaxLength(8)
+                        .HasColumnType("varchar(8)")
+                        .HasColumnName("gender");
+
+                    b.Property<string>("GroupNumber")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("group_number");
+
+                    b.Property<string>("IdNumber")
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)")
+                        .HasColumnName("id_number");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<string>("PayrollNumber")
+                        .HasMaxLength(8)
+                        .HasColumnType("varchar(8)")
+                        .HasColumnName("payroll_number");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(25)
+                        .HasColumnType("varchar(25)")
+                        .HasColumnName("phone_number");
+
+                    b.Property<string>("RejoinDate")
+                        .HasColumnType("longtext")
+                        .HasColumnName("rejoin_date");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("remarks");
+
+                    b.Property<string>("RetireeAmount")
+                        .HasColumnType("longtext")
+                        .HasColumnName("retiree_amount");
+
+                    b.Property<string>("RetrenchmentAmount")
+                        .HasColumnType("longtext")
+                        .HasColumnName("retrenchment_amount");
+
+                    b.Property<string>("RetrenchmentDate")
+                        .HasColumnType("longtext")
+                        .HasColumnName("retrenchment_date");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("status");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CostCentreId");
+
+                    b.HasIndex("GroupNumber");
+
+                    b.ToTable("tbl_employee_details");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.IssuesAttachment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("attachment_id");
+
+                    b.Property<string>("AttachmentType")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("attachment_type");
+
+                    b.Property<byte[]>("Data")
+                        .HasColumnType("longblob")
+                        .HasColumnName("data");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("File")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("file");
+
+                    b.Property<string>("IssueID")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("issue_id");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("time");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IssueID");
+
+                    b.ToTable("tbl_issues_attachments");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.IssuesProgress", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("progress_id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("IssueID")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("issue_id");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<string>("ReportedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("reported_by");
+
+                    b.Property<byte?>("Status")
+                        .HasMaxLength(255)
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("status");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("time");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IssueID");
+
+                    b.ToTable("tbl_issues_progresses");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.IssuesSubmission", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("submission_id");
+
+                    b.Property<string>("IssueID")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("issue_id");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<byte?>("Status")
+                        .HasMaxLength(255)
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("status");
+
+                    b.Property<string>("SubmittedTo")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("submitted_to");
+
+                    b.Property<string>("SubmittingUser")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("submitting_user");
+
+                    b.Property<DateTime?>("TimeSubmitted")
+                        .HasMaxLength(255)
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("time_submitted");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("type");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IssueID");
+
+                    b.ToTable("tbl_issues_submissions");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ItemGroup", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("group_id");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("name");
 
                     b.Property<string>("ParentGroupId")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("parent_group_id");
 
-                    b.Property<string>("ParentGroup_Caption")
-                        .HasColumnType("TEXT");
-
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
@@ -465,352 +877,559 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_item_groups");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.LeasedPropertiesAccount", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.LeasedPropertiesAccount", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("leased_property_account_id");
 
-                    b.Property<string>("AccountNumber")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("account_number");
-
                     b.Property<decimal>("CommencementRent")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("decimal(65,30)")
                         .HasColumnName("commencement_rent");
 
                     b.Property<string>("CostCentreCode")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("cost_centre_code");
 
-                    b.Property<string>("CostCentre_Caption")
-                        .HasColumnType("TEXT");
-
                     b.Property<decimal>("CurrentRent")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("decimal(65,30)")
                         .HasColumnName("current_rent");
 
                     b.Property<string>("LandlordAddress")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("landlord_address");
 
                     b.Property<DateTime>("LastReviewDate")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("last_review_date");
 
                     b.Property<DateTime>("LeasedOn")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("leased_on");
 
-                    b.Property<string>("LedgerAccountId")
+                    b.Property<string>("LedgerAccountCode")
                         .HasMaxLength(25)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("ledger_account_id");
-
-                    b.Property<string>("LedgerAccount_Caption")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(25)")
+                        .HasColumnName("ledger_account_code");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
                     b.HasIndex("CostCentreCode");
+
+                    b.HasIndex("LedgerAccountCode");
 
                     b.ToTable("tbl_leased_properties_accounts");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.LedgerAccount", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.LedgerAccount", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("ledger_account_id");
 
                     b.Property<string>("CostCentreCode")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("cost_centre_code");
-
-                    b.Property<string>("CostCentre_Caption")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("description");
 
                     b.Property<string>("GroupName")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("group_name");
 
                     b.Property<bool>("IncreaseWithDebit")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("tinyint(1)")
                         .HasColumnName("increase_with_debit");
 
                     b.Property<string>("LedgerAccountCode")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("ledger_account_code");
-
-                    b.Property<string>("LedgerAccount_Caption")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("MainGroup")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("main_group");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
-                    b.Property<string>("Supplier_Caption")
-                        .HasColumnType("TEXT");
-
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
                     b.HasIndex("CostCentreCode");
 
-                    b.HasIndex("LedgerAccountCode")
-                        .IsUnique();
+                    b.HasIndex("LedgerAccountCode");
 
                     b.ToTable("tbl_ledger_accounts");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.LetPropertiesAccount", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.LetPropertiesAccount", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("let_property_account_id");
 
-                    b.Property<string>("AccountNumber")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("account_number");
-
                     b.Property<decimal>("CommencementRent")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("decimal(65,30)")
                         .HasColumnName("commencement_rent");
 
                     b.Property<string>("CostCentreCode")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("cost_centre_code");
 
-                    b.Property<string>("CostCentre_Caption")
-                        .HasColumnType("TEXT");
-
                     b.Property<decimal>("CurrentRent")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("decimal(65,30)")
                         .HasColumnName("current_rent");
 
                     b.Property<DateTime>("LastReviewDate")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("last_review_date");
 
-                    b.Property<string>("LedgerAccountId")
+                    b.Property<string>("LedgerAccountCode")
                         .HasMaxLength(25)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("ledger_account_id");
-
-                    b.Property<string>("LedgerAccount_Caption")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(25)")
+                        .HasColumnName("ledger_account_code");
 
                     b.Property<DateTime>("LetOn")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("let_on");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<string>("TenantAddress")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("tenant_address");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
                     b.HasIndex("CostCentreCode");
 
-                    b.HasIndex("LedgerAccountId");
+                    b.HasIndex("LedgerAccountCode");
 
                     b.ToTable("tbl_let_properties_accounts");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.PasswordSafe", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.PasswordSafe", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("password_id");
 
                     b.Property<string>("Details")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("details");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("name");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("password");
 
                     b.Property<string>("Reminder")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("reminder");
 
                     b.Property<string>("UsersVisibleTo")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("longtext")
                         .HasColumnName("users_visible_to");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
                     b.ToTable("tbl_password_safes");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.QRCodesRequest", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.PayrollGroup", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("group_id");
+
+                    b.Property<string>("GroupName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("group_name");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tbl_payroll_groups");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.PriceChangeRequest", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("request_id");
+
+                    b.Property<string>("AttandedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("attanded_by");
+
+                    b.Property<string>("BatchNumber")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("batch_number");
+
+                    b.Property<string>("CostCentreCode")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("cost_centre_code");
+
+                    b.Property<string>("CostPrice")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("cost_price");
+
+                    b.Property<string>("ItemCode")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("item_code");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<string>("RequestingUser")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("requesting_user");
+
+                    b.Property<string>("SellingPrice")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("selling_price");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("status");
+
+                    b.Property<string>("TimeAttended")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("time_attended");
+
+                    b.Property<DateTime?>("TimeOfRequest")
+                        .HasMaxLength(255)
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("time_of_request");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CostCentreCode");
+
+                    b.HasIndex("ItemCode");
+
+                    b.ToTable("tbl_price_change_requests");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ProjectIssue", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("project_issue_id");
+
+                    b.Property<string>("Category")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("category");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("date");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Effect")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("effect");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<string>("RegisteredBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("registered_by");
+
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("status");
+
+                    b.Property<string>("SubCategory")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("sub_category");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("title");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tbl_project_issues");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.QRCodesRequest", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("qr_code_request_id");
 
                     b.Property<string>("CostCentreCode")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("cost_centre_code");
 
-                    b.Property<string>("CostCentre_Caption")
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("IsDuplicate")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("tinyint(1)")
                         .HasColumnName("is_duplicate");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<string>("RequestData")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("request_data");
 
                     b.Property<string>("ResponseData")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("response_data");
 
                     b.Property<byte?>("ResponseStatus")
                         .HasMaxLength(255)
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("tinyint unsigned")
                         .HasColumnName("response_status");
 
                     b.Property<DateTime>("Time")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("time");
 
                     b.Property<string>("TimsMachineUsed")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("tims_machine_used");
 
                     b.Property<string>("VATClass")
                         .HasMaxLength(5)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(5)")
                         .HasColumnName("vat_class");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
@@ -819,102 +1438,104 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_qr_codes_requests");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.QRRequestItem", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.QRRequestItem", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("sale_id");
 
                     b.Property<string>("CashSaleNumber")
                         .HasMaxLength(30)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(30)")
                         .HasColumnName("cash_sale_number");
 
                     b.Property<string>("CostCentreCode")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("cost_centre_code");
-
-                    b.Property<string>("CostCentre_Caption")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("HsCode")
                         .HasMaxLength(25)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(25)")
                         .HasColumnName("hs_code");
 
                     b.Property<string>("HsName")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("hs_name");
 
                     b.Property<string>("ItemCode")
                         .HasMaxLength(16)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(16)")
                         .HasColumnName("item_code");
 
                     b.Property<string>("ItemName")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("item_name");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<decimal>("PercentageDiscount")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("decimal(65,30)")
                         .HasColumnName("percentage_discount");
 
                     b.Property<decimal>("Quantity")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("decimal(65,30)")
                         .HasColumnName("quantity");
 
                     b.Property<string>("RequestID")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("request_id");
 
                     b.Property<DateTime>("Time")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("time");
 
                     b.Property<decimal>("TotalAmount")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("decimal(65,30)")
                         .HasColumnName("total_amount");
 
                     b.Property<string>("UnitOfMeasure")
                         .HasMaxLength(25)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(25)")
                         .HasColumnName("unit_of_measure");
 
                     b.Property<decimal>("UnitPrice")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("decimal(65,30)")
                         .HasColumnName("unit_price");
 
                     b.Property<decimal>("VATAmount")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("decimal(65,30)")
                         .HasColumnName("vat_amount");
 
                     b.Property<string>("VATClass")
                         .HasMaxLength(4)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(4)")
                         .HasColumnName("vat_class");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
@@ -925,50 +1546,99 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_qr_request_items");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.StockItem", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.StaffGroup", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("item_code");
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("group_number");
 
-                    b.Property<string>("Barcode")
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("barcode");
-
-                    b.Property<string>("GroupId")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("group_id");
-
-                    b.Property<string>("Group_Caption")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ItemName")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("item_name");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("description");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("is_active");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tbl_staff_groups");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.StockItem", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("item_code");
+
+                    b.Property<string>("Barcode")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("barcode");
+
+                    b.Property<string>("GroupId")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("group_id");
+
+                    b.Property<string>("ItemName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("item_name");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
@@ -977,88 +1647,186 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_stock_items");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.Supplier", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.StockItemCodesRequest", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("supplier_id");
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("item_code_request_id");
 
-                    b.Property<string>("Address")
+                    b.Property<string>("AttandedBy")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("address");
-
-                    b.Property<string>("ContactPerson")
-                        .HasMaxLength(25)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("contact_person");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("attanded_by");
 
                     b.Property<string>("CostCentreCode")
-                        .HasColumnType("TEXT")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("cost_centre_code");
 
-                    b.Property<string>("CostCentre_Caption")
-                        .HasColumnType("TEXT");
+                    b.Property<decimal>("CostPrice")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("cost_price");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("description");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Distributor")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("email");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("distributor");
+
+                    b.Property<string>("ItemCode")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("item_code");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
-                    b.Property<string>("PostalCode")
+                    b.Property<string>("RequestingUser")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("postal_code");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("requesting_user");
 
-                    b.Property<string>("SupplierCode")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("supplier_code");
+                    b.Property<decimal>("SellingPrice")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("selling_price");
 
-                    b.Property<string>("SupplierLedgerAccountId")
-                        .HasMaxLength(10)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("supplier_ledger_account_id");
-
-                    b.Property<string>("Supplier_Caption")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Telephone")
-                        .HasMaxLength(25)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("telephone");
-
-                    b.Property<string>("Town")
+                    b.Property<string>("Status")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("town");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("status");
+
+                    b.Property<string>("Supplier")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("supplier");
+
+                    b.Property<string>("TimeAttended")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("time_attended");
+
+                    b.Property<DateTime?>("TimeOfRequest")
+                        .HasMaxLength(255)
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("time_of_request");
+
+                    b.Property<string>("UnitOfMeasure")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("unit_of_measure");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CostCentreCode");
+
+                    b.HasIndex("ItemCode");
+
+                    b.ToTable("tbl_stock_item_codes_requests");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.Supplier", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("supplier_id");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("address");
+
+                    b.Property<string>("ContactPerson")
+                        .HasMaxLength(25)
+                        .HasColumnType("varchar(25)")
+                        .HasColumnName("contact_person");
+
+                    b.Property<string>("CostCentreCode")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("cost_centre_code");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("email");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<string>("PostalCode")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("postal_code");
+
+                    b.Property<string>("SupplierCode")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("supplier_code");
+
+                    b.Property<string>("Telephone")
+                        .HasMaxLength(25)
+                        .HasColumnType("varchar(25)")
+                        .HasColumnName("telephone");
+
+                    b.Property<string>("Town")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("town");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
@@ -1070,128 +1838,138 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_suppliers");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.SystemRight", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.SystemRight", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("right_id");
 
                     b.Property<bool>("IsCompulsory")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("tinyint(1)")
                         .HasColumnName("is_compulsory");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<string>("RightName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("right_name");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
                     b.ToTable("tbl_system_rights");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.SystemUser", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.SystemUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("user_id");
 
                     b.Property<string>("Contact")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("contact");
 
                     b.Property<string>("EmailAddress")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("email_address");
 
-                    b.Property<DateTime>("ExpirationDate")
-                        .HasColumnType("TEXT")
+                    b.Property<DateTime?>("ExpirationDate")
+                        .IsRequired()
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("expiration_date");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("INTEGER")
+                    b.Property<bool?>("IsActive")
+                        .IsRequired()
+                        .HasColumnType("tinyint(1)")
                         .HasColumnName("is_active");
 
-                    b.Property<DateTime>("MaturityDate")
-                        .HasColumnType("TEXT")
+                    b.Property<DateTime?>("MaturityDate")
+                        .IsRequired()
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("maturity_date");
 
                     b.Property<string>("NameOfTheUser")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("name_of_the_user");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("BLOB")
+                        .HasColumnType("longblob")
                         .HasColumnName("password_hash");
 
                     b.Property<byte[]>("PasswordSalt")
                         .IsRequired()
-                        .HasColumnType("BLOB")
+                        .HasColumnType("longblob")
                         .HasColumnName("password_salt");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("role_id");
-
-                    b.Property<string>("Role_Caption")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("username");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
@@ -1200,159 +1978,163 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_system_users");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.TimsMachine", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.TimsMachine", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("machine_id");
 
                     b.Property<string>("ClassType")
                         .HasMaxLength(5)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(5)")
                         .HasColumnName("class_type");
 
                     b.Property<byte>("CurrentStatus")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("tinyint unsigned")
                         .HasColumnName("current_status");
 
                     b.Property<string>("DomainName")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("domain_name");
 
                     b.Property<string>("ExternalIPAddress")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("external_ip_address");
 
                     b.Property<string>("ExternalPortNumber")
                         .HasMaxLength(8)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(8)")
                         .HasColumnName("external_port_number");
 
                     b.Property<string>("InternalIPAddress")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("internal_ip_address");
 
                     b.Property<string>("InternalPortNumber")
                         .HasMaxLength(8)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(8)")
                         .HasColumnName("internal_port_number");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<bool>("ReadyForUse")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("tinyint(1)")
                         .HasColumnName("ready_for_use");
 
                     b.Property<string>("SerialNumber")
                         .HasMaxLength(25)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(25)")
                         .HasColumnName("serial_number");
 
                     b.Property<string>("TimsName")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("tims_name");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
                     b.ToTable("tbl_tims_machines");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.UserAuditTrail", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.UserAuditTrail", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("audit_id");
 
                     b.Property<DateTime>("ActivityDate")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("activity_date");
 
                     b.Property<short>("ActivityEnumNumber")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("smallint")
                         .HasColumnName("activity_enum_number");
 
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("category");
 
                     b.Property<string>("CommandId")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("command_id");
-
-                    b.Property<string>("Command_Caption")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Data")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("longtext")
                         .HasColumnName("data");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("description");
 
                     b.Property<string>("LoginId")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("login_id");
-
-                    b.Property<string>("Login_Caption")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<string>("OldValues")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("longtext")
                         .HasColumnName("old_values");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
@@ -1363,54 +2145,56 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_user_audit_trails");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.UserLogin", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.UserLogin", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("login_id");
 
                     b.Property<string>("DeviceId")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(100)")
                         .HasColumnName("device_id");
 
                     b.Property<DateTime>("FromDate")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("from_date");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<DateTime>("UptoDate")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("upto_date");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("user_id");
 
-                    b.Property<string>("User_Caption")
-                        .HasColumnType("TEXT");
-
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
@@ -1419,74 +2203,71 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_user_logins");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.UserRight", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.UserRight", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("user_right_id");
 
                     b.Property<string>("CommandId")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("command_id");
-
-                    b.Property<string>("Command_Caption")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("description");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<string>("ObjectName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("object_name");
 
                     b.Property<string>("RightId")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("right_id");
-
-                    b.Property<string>("Right_Caption")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("role_id");
 
-                    b.Property<string>("Role_Caption")
-                        .HasColumnType("TEXT");
+                    b.Property<short>("UserActivities")
+                        .HasColumnType("smallint")
+                        .HasColumnName("user_activities");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("user_id");
 
-                    b.Property<string>("User_Caption")
-                        .HasColumnType("TEXT");
-
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
@@ -1501,121 +2282,206 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_user_rights");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.UserRole", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.UserRole", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("role_id");
 
                     b.Property<DateTime>("ExpirationDate")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("expiration_date");
 
                     b.Property<DateTime>("MaturityDate")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("maturity_date");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<string>("RoleName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("role_name");
 
-                    b.Property<short>("RoleNumber")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("role_number");
-
-                    b.Property<string>("UserRole_Caption")
-                        .HasColumnType("TEXT");
-
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
                     b.ToTable("tbl_user_roles");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.Verification", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.VendorCodesRequest", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("vendor_code_request_id");
+
+                    b.Property<string>("AttandedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("attanded_by");
+
+                    b.Property<string>("CostCentreCode")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("cost_centre_code");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<string>("RequestingUser")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("requesting_user");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("status");
+
+                    b.Property<string>("TimeAttended")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("time_attended");
+
+                    b.Property<DateTime?>("TimeOfRequest")
+                        .HasMaxLength(255)
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("time_of_request");
+
+                    b.Property<string>("VendorCode")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("vendor_code");
+
+                    b.Property<string>("VendorType")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("vendor_type");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CostCentreCode");
+
+                    b.ToTable("tbl_vendor_codes_requests");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.Verification", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("verification_id");
 
                     b.Property<DateTime>("DateOfVerification")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("date_of_verification");
 
                     b.Property<string>("LoginId")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("login_id");
-
-                    b.Property<string>("Login_Caption")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<long>("RecordId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("record_id");
 
                     b.Property<string>("TableName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("table_name");
 
                     b.Property<string>("VerificationName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("verification_name");
 
                     b.Property<long>("VerificationRecordId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("verification_record_id");
 
                     b.Property<long>("VerificationTypeId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("verification_type_id");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
@@ -1624,53 +2490,49 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_verifications");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.VerificationRight", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.VerificationRight", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("verification_right_id");
 
                     b.Property<string>("DeviceId")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("device_id");
 
-                    b.Property<string>("Device_Caption")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("UserId")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("user_id");
 
                     b.Property<string>("UserRoleId")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("user_role_id");
 
-                    b.Property<string>("UserRole_Caption")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("User_Caption")
-                        .HasColumnType("TEXT");
-
                     b.Property<long>("VerificationTypeId")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("verification_type_id");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
@@ -1684,63 +2546,57 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_verification_rights");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.VerificationType", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.VerificationType", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("verification_type_id");
 
                     b.Property<string>("Category")
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("category");
 
                     b.Property<string>("Narration")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
 
                     b.Property<string>("VerificationTypeName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("TEXT")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("verification_type_name");
 
                     b.Property<long?>("___DateInserted___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_added")
                         .HasColumnOrder(100);
 
                     b.Property<long?>("___DateUpdated___")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bigint")
                         .HasColumnName("date_updated")
                         .HasColumnOrder(101);
 
                     b.Property<byte?>("___ModificationStatus___")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("modification_status")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
                         .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
 
                     b.HasKey("Id");
 
                     b.ToTable("tbl_verification_types");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Core.Models.DataDevice", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ComputerAnydesk", b =>
                 {
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.CostCentre", "Station")
-                        .WithMany("DataDevices")
-                        .HasForeignKey("StationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Station");
-                });
-
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.ComputerAnydesk", b =>
-                {
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.CostCentre", "CostCentre")
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
                         .WithMany("ComputerAnydesks")
                         .HasForeignKey("CostCentreCode")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1749,33 +2605,103 @@ namespace KFA.SubSystem.Web.Migrations
                     b.Navigation("CostCentre");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.ItemGroup", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.DataDevice", b =>
                 {
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.ItemGroup", "ParentGroup")
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "Station")
+                        .WithMany("DataDevices")
+                        .HasForeignKey("StationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Station");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.DuesPaymentDetail", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.EmployeeDetail", null)
+                        .WithMany("DuesPaymentDetails")
+                        .HasForeignKey("EmployeeDetailId");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.EmployeeDetail", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
+                        .WithMany()
+                        .HasForeignKey("CostCentreId");
+
+                    b.HasOne("KFA.SubSystem.Core.Models.StaffGroup", "Group")
+                        .WithMany("EmployeeDetails")
+                        .HasForeignKey("GroupNumber");
+
+                    b.Navigation("CostCentre");
+
+                    b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.IssuesAttachment", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.ProjectIssue", "Issue")
+                        .WithMany("IssuesAttachments")
+                        .HasForeignKey("IssueID");
+
+                    b.Navigation("Issue");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.IssuesProgress", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.ProjectIssue", "Issue")
+                        .WithMany("IssuesProgresses")
+                        .HasForeignKey("IssueID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Issue");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.IssuesSubmission", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.ProjectIssue", "Issue")
+                        .WithMany("IssuesSubmissions")
+                        .HasForeignKey("IssueID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Issue");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ItemGroup", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.ItemGroup", "ParentGroup")
                         .WithMany("ItemGroups")
                         .HasForeignKey("ParentGroupId");
 
                     b.Navigation("ParentGroup");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.LeasedPropertiesAccount", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.LeasedPropertiesAccount", b =>
                 {
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.CostCentre", "CostCentre")
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
                         .WithMany("LeasedPropertiesAccounts")
                         .HasForeignKey("CostCentreCode");
 
+                    b.HasOne("KFA.SubSystem.Core.Models.LedgerAccount", "LedgerAccount")
+                        .WithMany()
+                        .HasForeignKey("LedgerAccountCode");
+
                     b.Navigation("CostCentre");
+
+                    b.Navigation("LedgerAccount");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.LedgerAccount", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.LedgerAccount", b =>
                 {
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.CostCentre", "CostCentre")
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
                         .WithMany("LedgerAccounts")
                         .HasForeignKey("CostCentreCode");
 
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.LeasedPropertiesAccount", "LeasedPropertiesAccount")
-                        .WithOne("LedgerAccount")
-                        .HasForeignKey("KFA.SubSystem.Infrastructure.Models.LedgerAccount", "LedgerAccountCode")
+                    b.HasOne("KFA.SubSystem.Core.Models.LeasedPropertiesAccount", "LeasedPropertiesAccount")
+                        .WithMany()
+                        .HasForeignKey("LedgerAccountCode")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1784,37 +2710,56 @@ namespace KFA.SubSystem.Web.Migrations
                     b.Navigation("LeasedPropertiesAccount");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.LetPropertiesAccount", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.LetPropertiesAccount", b =>
                 {
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.CostCentre", "CostCentre")
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
                         .WithMany("LetPropertiesAccounts")
                         .HasForeignKey("CostCentreCode");
 
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.LedgerAccount", "LedgerAccount")
+                    b.HasOne("KFA.SubSystem.Core.Models.LedgerAccount", "LedgerAccount")
                         .WithMany()
-                        .HasForeignKey("LedgerAccountId");
+                        .HasForeignKey("LedgerAccountCode");
 
                     b.Navigation("CostCentre");
 
                     b.Navigation("LedgerAccount");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.QRCodesRequest", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.PriceChangeRequest", b =>
                 {
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.CostCentre", "CostCentre")
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
+                        .WithMany()
+                        .HasForeignKey("CostCentreCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KFA.SubSystem.Core.Models.StockItem", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CostCentre");
+
+                    b.Navigation("Item");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.QRCodesRequest", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
                         .WithMany("QRCodesRequests")
                         .HasForeignKey("CostCentreCode");
 
                     b.Navigation("CostCentre");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.QRRequestItem", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.QRRequestItem", b =>
                 {
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.CostCentre", "CostCentre")
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
                         .WithMany("QRRequestItems")
                         .HasForeignKey("CostCentreCode");
 
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.QRCodesRequest", "QRCodesRequest")
+                    b.HasOne("KFA.SubSystem.Core.Models.QRCodesRequest", "QRCodesRequest")
                         .WithMany("QRRequestItems")
                         .HasForeignKey("RequestID");
 
@@ -1823,24 +2768,41 @@ namespace KFA.SubSystem.Web.Migrations
                     b.Navigation("QRCodesRequest");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.StockItem", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.StockItem", b =>
                 {
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.ItemGroup", "Group")
+                    b.HasOne("KFA.SubSystem.Core.Models.ItemGroup", "Group")
                         .WithMany("StockItems")
                         .HasForeignKey("GroupId");
 
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.Supplier", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.StockItemCodesRequest", b =>
                 {
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.CostCentre", "CostCentre")
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
+                        .WithMany()
+                        .HasForeignKey("CostCentreCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KFA.SubSystem.Core.Models.StockItem", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemCode");
+
+                    b.Navigation("CostCentre");
+
+                    b.Navigation("Item");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.Supplier", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
                         .WithMany("Suppliers")
                         .HasForeignKey("CostCentreCode");
 
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.LedgerAccount", "LedgerAccount")
+                    b.HasOne("KFA.SubSystem.Core.Models.LedgerAccount", "LedgerAccount")
                         .WithOne("Supplier")
-                        .HasForeignKey("KFA.SubSystem.Infrastructure.Models.Supplier", "SupplierCode")
+                        .HasForeignKey("KFA.SubSystem.Core.Models.Supplier", "SupplierCode")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1849,9 +2811,9 @@ namespace KFA.SubSystem.Web.Migrations
                     b.Navigation("LedgerAccount");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.SystemUser", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.SystemUser", b =>
                 {
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.UserRole", "Role")
+                    b.HasOne("KFA.SubSystem.Core.Models.UserRole", "Role")
                         .WithMany("SystemUsers")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1860,15 +2822,15 @@ namespace KFA.SubSystem.Web.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.UserAuditTrail", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.UserAuditTrail", b =>
                 {
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.CommandDetail", "Command")
+                    b.HasOne("KFA.SubSystem.Core.Models.CommandDetail", "Command")
                         .WithMany("UserAuditTrails")
                         .HasForeignKey("CommandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.UserLogin", "Login")
+                    b.HasOne("KFA.SubSystem.Core.Models.UserLogin", "Login")
                         .WithMany("UserAuditTrails")
                         .HasForeignKey("LoginId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1879,9 +2841,9 @@ namespace KFA.SubSystem.Web.Migrations
                     b.Navigation("Login");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.UserLogin", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.UserLogin", b =>
                 {
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.SystemUser", "User")
+                    b.HasOne("KFA.SubSystem.Core.Models.SystemUser", "User")
                         .WithMany("UserLogins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1890,23 +2852,23 @@ namespace KFA.SubSystem.Web.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.UserRight", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.UserRight", b =>
                 {
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.CommandDetail", "CommandDetail")
+                    b.HasOne("KFA.SubSystem.Core.Models.CommandDetail", "CommandDetail")
                         .WithMany()
                         .HasForeignKey("CommandId");
 
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.SystemRight", "Right")
+                    b.HasOne("KFA.SubSystem.Core.Models.SystemRight", "Right")
                         .WithMany("UserRights")
                         .HasForeignKey("RightId");
 
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.UserRole", "Role")
+                    b.HasOne("KFA.SubSystem.Core.Models.UserRole", "Role")
                         .WithMany("UserRights")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.SystemUser", "User")
+                    b.HasOne("KFA.SubSystem.Core.Models.SystemUser", "User")
                         .WithMany("UserRights")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1921,9 +2883,20 @@ namespace KFA.SubSystem.Web.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.Verification", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.VendorCodesRequest", b =>
                 {
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.UserLogin", "Login")
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
+                        .WithMany()
+                        .HasForeignKey("CostCentreCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CostCentre");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.Verification", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.UserLogin", "Login")
                         .WithMany("Verifications")
                         .HasForeignKey("LoginId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1932,19 +2905,19 @@ namespace KFA.SubSystem.Web.Migrations
                     b.Navigation("Login");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.VerificationRight", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.VerificationRight", b =>
                 {
                     b.HasOne("KFA.SubSystem.Core.Models.DataDevice", "Device")
                         .WithMany("VerificationRights")
                         .HasForeignKey("DeviceId");
 
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.SystemUser", "User")
+                    b.HasOne("KFA.SubSystem.Core.Models.SystemUser", "User")
                         .WithMany("VerificationRights")
                         .HasForeignKey("UserId");
 
-                    b.HasOne("KFA.SubSystem.Infrastructure.Models.UserRole", "UserRole")
+                    b.HasOne("KFA.SubSystem.Core.Models.UserRole", "UserRole")
                         .WithOne("VerificationRight")
-                        .HasForeignKey("KFA.SubSystem.Infrastructure.Models.VerificationRight", "UserRoleId")
+                        .HasForeignKey("KFA.SubSystem.Core.Models.VerificationRight", "UserRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1955,17 +2928,12 @@ namespace KFA.SubSystem.Web.Migrations
                     b.Navigation("UserRole");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Core.Models.DataDevice", b =>
-                {
-                    b.Navigation("VerificationRights");
-                });
-
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.CommandDetail", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.CommandDetail", b =>
                 {
                     b.Navigation("UserAuditTrails");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.CostCentre", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.CostCentre", b =>
                 {
                     b.Navigation("ComputerAnydesks");
 
@@ -1984,34 +2952,53 @@ namespace KFA.SubSystem.Web.Migrations
                     b.Navigation("Suppliers");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.ItemGroup", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.DataDevice", b =>
+                {
+                    b.Navigation("VerificationRights");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.EmployeeDetail", b =>
+                {
+                    b.Navigation("DuesPaymentDetails");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ItemGroup", b =>
                 {
                     b.Navigation("ItemGroups");
 
                     b.Navigation("StockItems");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.LeasedPropertiesAccount", b =>
-                {
-                    b.Navigation("LedgerAccount");
-                });
-
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.LedgerAccount", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.LedgerAccount", b =>
                 {
                     b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.QRCodesRequest", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ProjectIssue", b =>
+                {
+                    b.Navigation("IssuesAttachments");
+
+                    b.Navigation("IssuesProgresses");
+
+                    b.Navigation("IssuesSubmissions");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.QRCodesRequest", b =>
                 {
                     b.Navigation("QRRequestItems");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.SystemRight", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.StaffGroup", b =>
+                {
+                    b.Navigation("EmployeeDetails");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.SystemRight", b =>
                 {
                     b.Navigation("UserRights");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.SystemUser", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.SystemUser", b =>
                 {
                     b.Navigation("UserLogins");
 
@@ -2020,14 +3007,14 @@ namespace KFA.SubSystem.Web.Migrations
                     b.Navigation("VerificationRights");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.UserLogin", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.UserLogin", b =>
                 {
                     b.Navigation("UserAuditTrails");
 
                     b.Navigation("Verifications");
                 });
 
-            modelBuilder.Entity("KFA.SubSystem.Infrastructure.Models.UserRole", b =>
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.UserRole", b =>
                 {
                     b.Navigation("SystemUsers");
 
