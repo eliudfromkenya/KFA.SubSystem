@@ -3,6 +3,7 @@ using System;
 using KFA.SubSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -16,8 +17,193 @@ namespace KFA.SubSystem.Web.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ActualBudgetVariance", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("actual_budget_id");
+
+                    b.Property<decimal>("ActualValue")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("actual_value");
+
+                    b.Property<string>("BatchKey")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("batch_key");
+
+                    b.Property<decimal>("BudgetValue")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("budget_value");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("comment");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Field1")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("field_1");
+
+                    b.Property<string>("Field2")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("field_2");
+
+                    b.Property<string>("Field3")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("field_3");
+
+                    b.Property<string>("LedgerCode")
+                        .HasColumnType("longtext")
+                        .HasColumnName("ledger_code");
+
+                    b.Property<string>("LedgerCostCentreCode")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("ledger_cost_centre_code");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BatchKey");
+
+                    b.HasIndex("LedgerCostCentreCode");
+
+                    b.ToTable("tbl_actual_budget_variances");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ActualBudgetVariancesBatchHeader", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("batch_key");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("approved_by");
+
+                    b.Property<string>("BatchNumber")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("batch_number");
+
+                    b.Property<decimal>("CashSalesAmount")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("cash_sales_amount");
+
+                    b.Property<short>("ComputerNumberOfRecords")
+                        .HasColumnType("smallint")
+                        .HasColumnName("computer_number_of_records");
+
+                    b.Property<decimal>("ComputerTotalActualAmount")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("computer_total_actual_amount");
+
+                    b.Property<decimal>("ComputerTotalBudgetAmount")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("computer_total_budget_amount");
+
+                    b.Property<string>("CostCentreCode")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("cost_centre_code");
+
+                    b.Property<string>("Month")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("month");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<short>("NumberOfRecords")
+                        .HasColumnType("smallint")
+                        .HasColumnName("number_of_records");
+
+                    b.Property<string>("PreparedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("prepared_by");
+
+                    b.Property<decimal>("PurchasesesAmount")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("purchaseses_amount");
+
+                    b.Property<decimal>("TotalActualAmount")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("total_actual_amount");
+
+                    b.Property<decimal>("TotalBudgetAmount")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("total_budget_amount");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CostCentreCode");
+
+                    b.ToTable("tbl_actual_budget_variances_batch_headers");
+                });
 
             modelBuilder.Entity("KFA.SubSystem.Core.Models.CommandDetail", b =>
                 {
@@ -27,53 +213,44 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("command_id");
 
                     b.Property<string>("Action")
-                        .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("varchar(25)")
                         .HasColumnName("action");
 
                     b.Property<string>("ActiveState")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("varchar(10)")
                         .HasColumnName("active_state");
 
                     b.Property<string>("Category")
-                        .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("varchar(25)")
                         .HasColumnName("category");
 
                     b.Property<string>("CommandName")
-                        .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("varchar(25)")
                         .HasColumnName("command_name");
 
                     b.Property<string>("CommandText")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("command_text");
 
                     b.Property<long?>("ImageId")
-                        .IsRequired()
                         .HasColumnType("bigint")
                         .HasColumnName("image_id");
 
                     b.Property<string>("ImagePath")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("image_path");
 
                     b.Property<bool?>("IsEnabled")
-                        .IsRequired()
                         .HasColumnType("tinyint(1)")
                         .HasColumnName("is_enabled");
 
                     b.Property<bool?>("IsPublished")
-                        .IsRequired()
                         .HasColumnType("tinyint(1)")
                         .HasColumnName("is_published");
 
@@ -83,7 +260,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("narration");
 
                     b.Property<string>("ShortcutKey")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("shortcut_key");
@@ -135,12 +311,11 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("from");
 
                     b.Property<string>("Message")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("message");
 
-                    b.Property<byte>("MessageType")
+                    b.Property<byte?>("MessageType")
                         .HasMaxLength(255)
                         .HasColumnType("tinyint unsigned")
                         .HasColumnName("message_type");
@@ -198,18 +373,15 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("anydesk_id");
 
                     b.Property<string>("AnyDeskNumber")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
                         .HasColumnName("anydesk_number");
 
                     b.Property<string>("CostCentreCode")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("cost_centre_code");
 
                     b.Property<string>("DeviceName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("device_name");
@@ -318,6 +490,84 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_cost_centres");
                 });
 
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.CountSheetBatch", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("batch_key");
+
+                    b.Property<string>("BatchNumber")
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("batch_number");
+
+                    b.Property<string>("ClassOfCard")
+                        .HasMaxLength(8)
+                        .HasColumnType("varchar(8)")
+                        .HasColumnName("class_of_card");
+
+                    b.Property<short>("ComputerNumberOfRecords")
+                        .HasColumnType("smallint")
+                        .HasColumnName("computer_number_of_records");
+
+                    b.Property<decimal>("ComputerTotalAmount")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("computer_total_amount");
+
+                    b.Property<string>("CostCentreCode")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("cost_centre_code");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("date");
+
+                    b.Property<string>("Month")
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("month");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<short>("NoOfRecords")
+                        .HasColumnType("smallint")
+                        .HasColumnName("no_of_records");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("total_amount");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CostCentreCode");
+
+                    b.ToTable("tbl_count_sheet_batches");
+                });
+
             modelBuilder.Entity("KFA.SubSystem.Core.Models.DataDevice", b =>
                 {
                     b.Property<string>("Id")
@@ -331,13 +581,11 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("device_caption");
 
                     b.Property<string>("DeviceCode")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
                         .HasColumnName("device_code");
 
                     b.Property<string>("DeviceName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("device_name");
@@ -353,7 +601,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("device_right");
 
                     b.Property<string>("StationID")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("station");
 
@@ -387,6 +634,58 @@ namespace KFA.SubSystem.Web.Migrations
                     b.HasIndex("StationID");
 
                     b.ToTable("tbl_data_devices");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.DefaultAccessRight", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("right_id");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<string>("Rights")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("rights");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("type");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tbl_default_access_rights");
                 });
 
             modelBuilder.Entity("KFA.SubSystem.Core.Models.DeviceGuid", b =>
@@ -429,12 +728,10 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("payment_id");
 
                     b.Property<string>("Amount")
-                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("amount");
 
                     b.Property<string>("Date")
-                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("date");
 
@@ -452,7 +749,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("employee_id");
 
                     b.Property<string>("IsFinalPayment")
-                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("is_final_payment");
 
@@ -462,17 +758,14 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("narration");
 
                     b.Property<string>("OpeningBalance")
-                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("opening_balance");
 
                     b.Property<string>("PaidTo")
-                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("paid_to");
 
                     b.Property<string>("PaymentType")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("varchar(10)")
                         .HasColumnName("payment_type");
@@ -520,18 +813,14 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnType("longtext")
                         .HasColumnName("amount_due");
 
-                    b.Property<string>("Classfication")
+                    b.Property<string>("Classification")
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("classfication");
 
                     b.Property<string>("CostCentreCode")
-                        .HasMaxLength(5)
-                        .HasColumnType("varchar(5)")
+                        .HasColumnType("varchar(20)")
                         .HasColumnName("cost_centre_code");
-
-                    b.Property<string>("CostCentreId")
-                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Date")
                         .HasColumnType("longtext")
@@ -543,7 +832,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("email");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("full_name");
@@ -566,6 +854,10 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)")
                         .HasColumnName("narration");
+
+                    b.Property<string>("PayrollGroupID")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("payroll_group_id");
 
                     b.Property<string>("PayrollNumber")
                         .HasMaxLength(8)
@@ -625,11 +917,204 @@ namespace KFA.SubSystem.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CostCentreId");
+                    b.HasIndex("CostCentreCode");
 
                     b.HasIndex("GroupNumber");
 
+                    b.HasIndex("PayrollGroupID");
+
                     b.ToTable("tbl_employee_details");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ExpenseBudgetBatchHeader", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("batch_key");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("approved_by");
+
+                    b.Property<string>("BatchNumber")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("batch_number");
+
+                    b.Property<short>("ComputerNumberOfRecords")
+                        .HasColumnType("smallint")
+                        .HasColumnName("computer_number_of_records");
+
+                    b.Property<decimal>("ComputerTotalAmount")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("computer_total_amount");
+
+                    b.Property<string>("CostCentreCode")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("cost_centre_code");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("date");
+
+                    b.Property<string>("MonthFrom")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("month_from");
+
+                    b.Property<string>("MonthTo")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("month_to");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<short>("NumberOfRecords")
+                        .HasColumnType("smallint")
+                        .HasColumnName("number_of_records");
+
+                    b.Property<string>("PreparedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("prepared_by");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("total_amount");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CostCentreCode");
+
+                    b.ToTable("tbl_expense_budget_batch_headers");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ExpensesBudgetDetail", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("expense_budget_detail_id");
+
+                    b.Property<string>("BasisOfCalculation")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("basis_of_calculation");
+
+                    b.Property<string>("BatchKey")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("batch_key");
+
+                    b.Property<string>("LedgerAccountCode")
+                        .HasColumnType("longtext")
+                        .HasColumnName("ledger_account_code");
+
+                    b.Property<decimal>("Month01")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_01");
+
+                    b.Property<decimal>("Month02")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_02");
+
+                    b.Property<decimal>("Month03")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_03");
+
+                    b.Property<decimal>("Month04")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_04");
+
+                    b.Property<decimal>("Month05")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_05");
+
+                    b.Property<decimal>("Month06")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_06");
+
+                    b.Property<decimal>("Month07")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_07");
+
+                    b.Property<decimal>("Month08")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_08");
+
+                    b.Property<decimal>("Month09")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_09");
+
+                    b.Property<decimal>("Month10")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_10");
+
+                    b.Property<decimal>("Month11")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_11");
+
+                    b.Property<decimal>("Month12")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_12");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BatchKey");
+
+                    b.ToTable("tbl_expenses_budget_details");
                 });
 
             modelBuilder.Entity("KFA.SubSystem.Core.Models.IssuesAttachment", b =>
@@ -706,13 +1191,11 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("progress_id");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("description");
 
                     b.Property<string>("IssueID")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("issue_id");
 
@@ -770,7 +1253,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("submission_id");
 
                     b.Property<string>("IssueID")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("issue_id");
 
@@ -785,13 +1267,11 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("status");
 
                     b.Property<string>("SubmittedTo")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("submitted_to");
 
                     b.Property<string>("SubmittingUser")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("submitting_user");
@@ -841,7 +1321,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("group_id");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("name");
@@ -955,15 +1434,20 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnType("varchar(20)")
                         .HasColumnName("ledger_account_id");
 
+                    b.Property<string>("ActualBudgetVarianceId")
+                        .HasColumnType("varchar(20)");
+
                     b.Property<string>("CostCentreCode")
                         .HasColumnType("varchar(20)")
                         .HasColumnName("cost_centre_code");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("description");
+
+                    b.Property<string>("ExpensesBudgetDetailId")
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("GroupName")
                         .HasMaxLength(255)
@@ -975,7 +1459,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("increase_with_debit");
 
                     b.Property<string>("LedgerAccountCode")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("ledger_account_code");
 
@@ -1011,7 +1494,11 @@ namespace KFA.SubSystem.Web.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ActualBudgetVarianceId");
+
                     b.HasIndex("CostCentreCode");
+
+                    b.HasIndex("ExpensesBudgetDetailId");
 
                     b.HasIndex("LedgerAccountCode");
 
@@ -1097,19 +1584,16 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("password_id");
 
                     b.Property<string>("Details")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("details");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("name");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("password");
@@ -1156,7 +1640,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("group_id");
 
                     b.Property<string>("GroupName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("group_name");
@@ -1209,18 +1692,15 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("batch_number");
 
                     b.Property<string>("CostCentreCode")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("cost_centre_code");
 
                     b.Property<string>("CostPrice")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("cost_price");
 
                     b.Property<string>("ItemCode")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("item_code");
 
@@ -1235,7 +1715,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("requesting_user");
 
                     b.Property<string>("SellingPrice")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("selling_price");
@@ -1245,9 +1724,9 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("status");
 
-                    b.Property<string>("TimeAttended")
+                    b.Property<DateTime?>("TimeAttended")
                         .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("time_attended");
 
                     b.Property<DateTime?>("TimeOfRequest")
@@ -1301,7 +1780,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("date");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("description");
@@ -1331,7 +1809,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("sub_category");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("title");
@@ -1361,6 +1838,207 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_project_issues");
                 });
 
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.PurchasesBudgetBatchHeader", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("batch_key");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("approved_by");
+
+                    b.Property<string>("BatchNumber")
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("batch_number");
+
+                    b.Property<short>("ComputerNumberOfRecords")
+                        .HasColumnType("smallint")
+                        .HasColumnName("computer_number_of_records");
+
+                    b.Property<decimal>("ComputerTotalAmount")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("computer_total_amount");
+
+                    b.Property<string>("CostCentreCode")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("cost_centre_code");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("date");
+
+                    b.Property<string>("MonthFrom")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("month_from");
+
+                    b.Property<string>("MonthTo")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("month_to");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<short>("NumberOfRecords")
+                        .HasColumnType("smallint")
+                        .HasColumnName("number_of_records");
+
+                    b.Property<string>("PreparedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("prepared_by");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("total_amount");
+
+                    b.Property<decimal>("TotalQuantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("total_quantity");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CostCentreCode");
+
+                    b.ToTable("tbl_purchases_budget_batch_headers");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.PurchasesBudgetDetail", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("purchases_budget_detail_id");
+
+                    b.Property<string>("BatchKey")
+                        .HasColumnType("longtext")
+                        .HasColumnName("batch_key");
+
+                    b.Property<decimal>("BuyingPrice")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("buying_price");
+
+                    b.Property<string>("ItemCode")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("item_code");
+
+                    b.Property<byte>("Month")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("month");
+
+                    b.Property<decimal>("Month01Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_01_quantity");
+
+                    b.Property<decimal>("Month02Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_02__quantity");
+
+                    b.Property<decimal>("Month03Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_03__quantity");
+
+                    b.Property<decimal>("Month04Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_04__quantity");
+
+                    b.Property<decimal>("Month05Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_05__quantity");
+
+                    b.Property<decimal>("Month06Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_06__quantity");
+
+                    b.Property<decimal>("Month07Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_07__quantity");
+
+                    b.Property<decimal>("Month08Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_08__quantity");
+
+                    b.Property<decimal>("Month09Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_09__quantity");
+
+                    b.Property<decimal>("Month10Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_10__quantity");
+
+                    b.Property<decimal>("Month11Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_11__quantity");
+
+                    b.Property<decimal>("Month12Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_12__quantity");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<decimal>("UnitCostPrice")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("unit_cost_price");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemCode");
+
+                    b.ToTable("tbl_purchases_budget_details");
+                });
+
             modelBuilder.Entity("KFA.SubSystem.Core.Models.QRCodesRequest", b =>
                 {
                     b.Property<string>("Id")
@@ -1382,7 +2060,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("narration");
 
                     b.Property<string>("RequestData")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("request_data");
@@ -1546,6 +2223,209 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_qr_request_items");
                 });
 
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.SalesBudgetBatchHeader", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("batch_key");
+
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("approved_by");
+
+                    b.Property<string>("BatchNumber")
+                        .HasMaxLength(25)
+                        .HasColumnType("varchar(25)")
+                        .HasColumnName("batch_number");
+
+                    b.Property<short>("ComputerNumberOfRecords")
+                        .HasColumnType("smallint")
+                        .HasColumnName("computer_number_of_records");
+
+                    b.Property<decimal>("ComputerTotalAmount")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("computer_total_amount");
+
+                    b.Property<string>("CostCentreCode")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("cost_centre_code");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("date");
+
+                    b.Property<string>("MonthFrom")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("month_from");
+
+                    b.Property<string>("MonthTo")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("month_to");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<short>("NumberOfRecords")
+                        .HasColumnType("smallint")
+                        .HasColumnName("number_of_records");
+
+                    b.Property<string>("PreparedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("prepared_by");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("total_amount");
+
+                    b.Property<decimal>("TotalQuantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("total_quantity");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CostCentreCode");
+
+                    b.ToTable("tbl_sales_budget_batch_headers");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.SalesBudgetDetail", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("sales_budget_detail_id");
+
+                    b.Property<string>("BatchKey")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("batch_key");
+
+                    b.Property<string>("ItemCode")
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("item_code");
+
+                    b.Property<byte>("Month")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("month");
+
+                    b.Property<decimal>("Month01Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_01_quantity");
+
+                    b.Property<decimal>("Month02Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_02__quantity");
+
+                    b.Property<decimal>("Month03Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_03__quantity");
+
+                    b.Property<decimal>("Month04Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_04__quantity");
+
+                    b.Property<decimal>("Month05Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_05__quantity");
+
+                    b.Property<decimal>("Month06Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_06__quantity");
+
+                    b.Property<decimal>("Month07Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_07__quantity");
+
+                    b.Property<decimal>("Month08Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_08__quantity");
+
+                    b.Property<decimal>("Month09Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_09__quantity");
+
+                    b.Property<decimal>("Month10Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_10__quantity");
+
+                    b.Property<decimal>("Month11Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_11__quantity");
+
+                    b.Property<decimal>("Month12Quantity")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("month_12__quantity");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<decimal>("SellingPrice")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("selling_price");
+
+                    b.Property<decimal>("UnitCostPrice")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("unit_cost_price");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BatchKey");
+
+                    b.HasIndex("ItemCode");
+
+                    b.ToTable("tbl_sales_budget_details");
+                });
+
             modelBuilder.Entity("KFA.SubSystem.Core.Models.StaffGroup", b =>
                 {
                     b.Property<string>("Id")
@@ -1554,7 +2434,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("group_number");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("description");
@@ -1593,6 +2472,95 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_staff_groups");
                 });
 
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.StockCountSheet", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("count_sheet_id");
+
+                    b.Property<decimal>("Actual")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("actual");
+
+                    b.Property<decimal>("AverageAgeMonths")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("average_age_months");
+
+                    b.Property<string>("BatchKey")
+                        .HasColumnType("longtext")
+                        .HasColumnName("batch_key");
+
+                    b.Property<long>("CountSheetDocumentId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("count_sheet_document_id");
+
+                    b.Property<string>("DocumentNumber")
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("document_number");
+
+                    b.Property<string>("ItemCode")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)")
+                        .HasColumnName("item_code");
+
+                    b.Property<string>("Narration")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
+                        .HasColumnName("narration");
+
+                    b.Property<decimal>("QuantityOnHand")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("quantity_on_hand");
+
+                    b.Property<decimal>("QuantitySoldLast12Months")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("quantity_sold_last_12_months");
+
+                    b.Property<decimal>("SellingPrice")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("selling_price");
+
+                    b.Property<decimal>("StocksOver")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("stocks_over");
+
+                    b.Property<decimal>("StocksShort")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("stocks_short");
+
+                    b.Property<decimal>("UnitCostPrice")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("unitcostprice");
+
+                    b.Property<long?>("___DateInserted___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_added")
+                        .HasColumnOrder(100);
+
+                    b.Property<long?>("___DateUpdated___")
+                        .HasColumnType("bigint")
+                        .HasColumnName("date_updated")
+                        .HasColumnOrder(101);
+
+                    b.Property<byte?>("___ModificationStatus___")
+                        .HasColumnType("tinyint unsigned")
+                        .HasColumnName("is_currently_enabled")
+                        .HasColumnOrder(103);
+
+                    b.Property<long?>("originator_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("originator_id")
+                        .HasColumnOrder(101);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemCode");
+
+                    b.ToTable("tbl_stock_count_sheets");
+                });
+
             modelBuilder.Entity("KFA.SubSystem.Core.Models.StockItem", b =>
                 {
                     b.Property<string>("Id")
@@ -1610,7 +2578,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("group_id");
 
                     b.Property<string>("ItemName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("item_name");
@@ -1660,7 +2627,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("attanded_by");
 
                     b.Property<string>("CostCentreCode")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("cost_centre_code");
 
@@ -1669,7 +2635,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("cost_price");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("description");
@@ -1707,9 +2672,9 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("supplier");
 
-                    b.Property<string>("TimeAttended")
+                    b.Property<DateTime?>("TimeAttended")
                         .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("time_attended");
 
                     b.Property<DateTime?>("TimeOfRequest")
@@ -1773,7 +2738,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("cost_centre_code");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("description");
@@ -1794,7 +2758,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("postal_code");
 
                     b.Property<string>("SupplierCode")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("supplier_code");
 
@@ -1855,7 +2818,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("narration");
 
                     b.Property<string>("RightName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("right_name");
@@ -1893,34 +2855,28 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("user_id");
 
                     b.Property<string>("Contact")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("contact");
 
                     b.Property<string>("EmailAddress")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("email_address");
 
                     b.Property<DateTime?>("ExpirationDate")
-                        .IsRequired()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("expiration_date");
 
                     b.Property<bool?>("IsActive")
-                        .IsRequired()
                         .HasColumnType("tinyint(1)")
                         .HasColumnName("is_active");
 
                     b.Property<DateTime?>("MaturityDate")
-                        .IsRequired()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("maturity_date");
 
                     b.Property<string>("NameOfTheUser")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("name_of_the_user");
@@ -1931,22 +2887,18 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("narration");
 
                     b.Property<byte[]>("PasswordHash")
-                        .IsRequired()
                         .HasColumnType("longblob")
                         .HasColumnName("password_hash");
 
                     b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
                         .HasColumnType("longblob")
                         .HasColumnName("password_salt");
 
                     b.Property<string>("RoleId")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("role_id");
 
                     b.Property<string>("Username")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("username");
@@ -2010,7 +2962,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("external_port_number");
 
                     b.Property<string>("InternalIPAddress")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)")
                         .HasColumnName("internal_ip_address");
@@ -2080,29 +3031,24 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("activity_enum_number");
 
                     b.Property<string>("Category")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("category");
 
                     b.Property<string>("CommandId")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("command_id");
 
                     b.Property<string>("Data")
-                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("data");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("description");
 
                     b.Property<string>("LoginId")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("login_id");
 
@@ -2112,7 +3058,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("narration");
 
                     b.Property<string>("OldValues")
-                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("old_values");
 
@@ -2153,7 +3098,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("login_id");
 
                     b.Property<string>("DeviceId")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
                         .HasColumnName("device_id");
@@ -2172,7 +3116,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("upto_date");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("user_id");
 
@@ -2215,7 +3158,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("command_id");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("description");
@@ -2226,7 +3168,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("narration");
 
                     b.Property<string>("ObjectName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("object_name");
@@ -2236,7 +3177,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("right_id");
 
                     b.Property<string>("RoleId")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("role_id");
 
@@ -2245,7 +3185,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("user_activities");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("user_id");
 
@@ -2303,7 +3242,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("narration");
 
                     b.Property<string>("RoleName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("role_name");
@@ -2346,12 +3284,10 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("attanded_by");
 
                     b.Property<string>("CostCentreCode")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("cost_centre_code");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("description");
@@ -2371,9 +3307,9 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("status");
 
-                    b.Property<string>("TimeAttended")
+                    b.Property<DateTime?>("TimeAttended")
                         .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("time_attended");
 
                     b.Property<DateTime?>("TimeOfRequest")
@@ -2430,7 +3366,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("date_of_verification");
 
                     b.Property<string>("LoginId")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("login_id");
 
@@ -2444,13 +3379,11 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("record_id");
 
                     b.Property<string>("TableName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("table_name");
 
                     b.Property<string>("VerificationName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("verification_name");
@@ -2506,7 +3439,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("user_id");
 
                     b.Property<string>("UserRoleId")
-                        .IsRequired()
                         .HasColumnType("varchar(20)")
                         .HasColumnName("user_role_id");
 
@@ -2564,7 +3496,6 @@ namespace KFA.SubSystem.Web.Migrations
                         .HasColumnName("narration");
 
                     b.Property<string>("VerificationTypeName")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("verification_type_name");
@@ -2594,13 +3525,46 @@ namespace KFA.SubSystem.Web.Migrations
                     b.ToTable("tbl_verification_types");
                 });
 
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ActualBudgetVariance", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.ActualBudgetVariancesBatchHeader", "Batch")
+                        .WithMany()
+                        .HasForeignKey("BatchKey");
+
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "LedgerCostCentre")
+                        .WithMany()
+                        .HasForeignKey("LedgerCostCentreCode");
+
+                    b.Navigation("Batch");
+
+                    b.Navigation("LedgerCostCentre");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ActualBudgetVariancesBatchHeader", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
+                        .WithMany()
+                        .HasForeignKey("CostCentreCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CostCentre");
+                });
+
             modelBuilder.Entity("KFA.SubSystem.Core.Models.ComputerAnydesk", b =>
                 {
                     b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
                         .WithMany("ComputerAnydesks")
-                        .HasForeignKey("CostCentreCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CostCentreCode");
+
+                    b.Navigation("CostCentre");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.CountSheetBatch", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
+                        .WithMany()
+                        .HasForeignKey("CostCentreCode");
 
                     b.Navigation("CostCentre");
                 });
@@ -2609,9 +3573,7 @@ namespace KFA.SubSystem.Web.Migrations
                 {
                     b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "Station")
                         .WithMany("DataDevices")
-                        .HasForeignKey("StationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StationID");
 
                     b.Navigation("Station");
                 });
@@ -2627,15 +3589,41 @@ namespace KFA.SubSystem.Web.Migrations
                 {
                     b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
                         .WithMany()
-                        .HasForeignKey("CostCentreId");
+                        .HasForeignKey("CostCentreCode");
 
                     b.HasOne("KFA.SubSystem.Core.Models.StaffGroup", "Group")
                         .WithMany("EmployeeDetails")
                         .HasForeignKey("GroupNumber");
 
+                    b.HasOne("KFA.SubSystem.Core.Models.PayrollGroup", "PayrollGroup")
+                        .WithMany()
+                        .HasForeignKey("PayrollGroupID");
+
                     b.Navigation("CostCentre");
 
                     b.Navigation("Group");
+
+                    b.Navigation("PayrollGroup");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ExpenseBudgetBatchHeader", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
+                        .WithMany()
+                        .HasForeignKey("CostCentreCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CostCentre");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ExpensesBudgetDetail", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.ExpenseBudgetBatchHeader", "Batch")
+                        .WithMany("ExpensesBudgetDetails")
+                        .HasForeignKey("BatchKey");
+
+                    b.Navigation("Batch");
                 });
 
             modelBuilder.Entity("KFA.SubSystem.Core.Models.IssuesAttachment", b =>
@@ -2651,9 +3639,7 @@ namespace KFA.SubSystem.Web.Migrations
                 {
                     b.HasOne("KFA.SubSystem.Core.Models.ProjectIssue", "Issue")
                         .WithMany("IssuesProgresses")
-                        .HasForeignKey("IssueID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IssueID");
 
                     b.Navigation("Issue");
                 });
@@ -2662,9 +3648,7 @@ namespace KFA.SubSystem.Web.Migrations
                 {
                     b.HasOne("KFA.SubSystem.Core.Models.ProjectIssue", "Issue")
                         .WithMany("IssuesSubmissions")
-                        .HasForeignKey("IssueID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IssueID");
 
                     b.Navigation("Issue");
                 });
@@ -2695,15 +3679,21 @@ namespace KFA.SubSystem.Web.Migrations
 
             modelBuilder.Entity("KFA.SubSystem.Core.Models.LedgerAccount", b =>
                 {
+                    b.HasOne("KFA.SubSystem.Core.Models.ActualBudgetVariance", null)
+                        .WithMany("LedgerAccounts")
+                        .HasForeignKey("ActualBudgetVarianceId");
+
                     b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
                         .WithMany("LedgerAccounts")
                         .HasForeignKey("CostCentreCode");
 
+                    b.HasOne("KFA.SubSystem.Core.Models.ExpensesBudgetDetail", null)
+                        .WithMany("LedgerAccounts")
+                        .HasForeignKey("ExpensesBudgetDetailId");
+
                     b.HasOne("KFA.SubSystem.Core.Models.LeasedPropertiesAccount", "LeasedPropertiesAccount")
                         .WithMany()
-                        .HasForeignKey("LedgerAccountCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LedgerAccountCode");
 
                     b.Navigation("CostCentre");
 
@@ -2729,17 +3719,31 @@ namespace KFA.SubSystem.Web.Migrations
                 {
                     b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
                         .WithMany()
-                        .HasForeignKey("CostCentreCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CostCentreCode");
 
                     b.HasOne("KFA.SubSystem.Core.Models.StockItem", "Item")
                         .WithMany()
-                        .HasForeignKey("ItemCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ItemCode");
 
                     b.Navigation("CostCentre");
+
+                    b.Navigation("Item");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.PurchasesBudgetBatchHeader", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
+                        .WithMany()
+                        .HasForeignKey("CostCentreCode");
+
+                    b.Navigation("CostCentre");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.PurchasesBudgetDetail", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.StockItem", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemCode");
 
                     b.Navigation("Item");
                 });
@@ -2768,6 +3772,41 @@ namespace KFA.SubSystem.Web.Migrations
                     b.Navigation("QRCodesRequest");
                 });
 
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.SalesBudgetBatchHeader", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
+                        .WithMany()
+                        .HasForeignKey("CostCentreCode");
+
+                    b.Navigation("CostCentre");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.SalesBudgetDetail", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.SalesBudgetBatchHeader", "Batch")
+                        .WithMany("SalesBudgetDetails")
+                        .HasForeignKey("BatchKey");
+
+                    b.HasOne("KFA.SubSystem.Core.Models.StockItem", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemCode");
+
+                    b.Navigation("Batch");
+
+                    b.Navigation("Item");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.StockCountSheet", b =>
+                {
+                    b.HasOne("KFA.SubSystem.Core.Models.StockItem", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+                });
+
             modelBuilder.Entity("KFA.SubSystem.Core.Models.StockItem", b =>
                 {
                     b.HasOne("KFA.SubSystem.Core.Models.ItemGroup", "Group")
@@ -2781,9 +3820,7 @@ namespace KFA.SubSystem.Web.Migrations
                 {
                     b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
                         .WithMany()
-                        .HasForeignKey("CostCentreCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CostCentreCode");
 
                     b.HasOne("KFA.SubSystem.Core.Models.StockItem", "Item")
                         .WithMany()
@@ -2802,9 +3839,7 @@ namespace KFA.SubSystem.Web.Migrations
 
                     b.HasOne("KFA.SubSystem.Core.Models.LedgerAccount", "LedgerAccount")
                         .WithOne("Supplier")
-                        .HasForeignKey("KFA.SubSystem.Core.Models.Supplier", "SupplierCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("KFA.SubSystem.Core.Models.Supplier", "SupplierCode");
 
                     b.Navigation("CostCentre");
 
@@ -2815,9 +3850,7 @@ namespace KFA.SubSystem.Web.Migrations
                 {
                     b.HasOne("KFA.SubSystem.Core.Models.UserRole", "Role")
                         .WithMany("SystemUsers")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RoleId");
 
                     b.Navigation("Role");
                 });
@@ -2826,15 +3859,11 @@ namespace KFA.SubSystem.Web.Migrations
                 {
                     b.HasOne("KFA.SubSystem.Core.Models.CommandDetail", "Command")
                         .WithMany("UserAuditTrails")
-                        .HasForeignKey("CommandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CommandId");
 
                     b.HasOne("KFA.SubSystem.Core.Models.UserLogin", "Login")
                         .WithMany("UserAuditTrails")
-                        .HasForeignKey("LoginId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LoginId");
 
                     b.Navigation("Command");
 
@@ -2845,9 +3874,7 @@ namespace KFA.SubSystem.Web.Migrations
                 {
                     b.HasOne("KFA.SubSystem.Core.Models.SystemUser", "User")
                         .WithMany("UserLogins")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
@@ -2864,15 +3891,11 @@ namespace KFA.SubSystem.Web.Migrations
 
                     b.HasOne("KFA.SubSystem.Core.Models.UserRole", "Role")
                         .WithMany("UserRights")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RoleId");
 
                     b.HasOne("KFA.SubSystem.Core.Models.SystemUser", "User")
                         .WithMany("UserRights")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("CommandDetail");
 
@@ -2887,9 +3910,7 @@ namespace KFA.SubSystem.Web.Migrations
                 {
                     b.HasOne("KFA.SubSystem.Core.Models.CostCentre", "CostCentre")
                         .WithMany()
-                        .HasForeignKey("CostCentreCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CostCentreCode");
 
                     b.Navigation("CostCentre");
                 });
@@ -2898,9 +3919,7 @@ namespace KFA.SubSystem.Web.Migrations
                 {
                     b.HasOne("KFA.SubSystem.Core.Models.UserLogin", "Login")
                         .WithMany("Verifications")
-                        .HasForeignKey("LoginId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LoginId");
 
                     b.Navigation("Login");
                 });
@@ -2917,15 +3936,18 @@ namespace KFA.SubSystem.Web.Migrations
 
                     b.HasOne("KFA.SubSystem.Core.Models.UserRole", "UserRole")
                         .WithOne("VerificationRight")
-                        .HasForeignKey("KFA.SubSystem.Core.Models.VerificationRight", "UserRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("KFA.SubSystem.Core.Models.VerificationRight", "UserRoleId");
 
                     b.Navigation("Device");
 
                     b.Navigation("User");
 
                     b.Navigation("UserRole");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ActualBudgetVariance", b =>
+                {
+                    b.Navigation("LedgerAccounts");
                 });
 
             modelBuilder.Entity("KFA.SubSystem.Core.Models.CommandDetail", b =>
@@ -2962,6 +3984,16 @@ namespace KFA.SubSystem.Web.Migrations
                     b.Navigation("DuesPaymentDetails");
                 });
 
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ExpenseBudgetBatchHeader", b =>
+                {
+                    b.Navigation("ExpensesBudgetDetails");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.ExpensesBudgetDetail", b =>
+                {
+                    b.Navigation("LedgerAccounts");
+                });
+
             modelBuilder.Entity("KFA.SubSystem.Core.Models.ItemGroup", b =>
                 {
                     b.Navigation("ItemGroups");
@@ -2986,6 +4018,11 @@ namespace KFA.SubSystem.Web.Migrations
             modelBuilder.Entity("KFA.SubSystem.Core.Models.QRCodesRequest", b =>
                 {
                     b.Navigation("QRRequestItems");
+                });
+
+            modelBuilder.Entity("KFA.SubSystem.Core.Models.SalesBudgetBatchHeader", b =>
+                {
+                    b.Navigation("SalesBudgetDetails");
                 });
 
             modelBuilder.Entity("KFA.SubSystem.Core.Models.StaffGroup", b =>

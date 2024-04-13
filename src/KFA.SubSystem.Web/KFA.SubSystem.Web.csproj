@@ -16,6 +16,7 @@
     <PackageReference Include="Ardalis.SharedKernel" />
     <PackageReference Include="Autofac" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" />
+    <PackageReference Include="EfCore.SchemaCompare" />
     <PackageReference Include="FastEndpoints" />
     <PackageReference Include="FastEndpoints.AspVersioning" />
     <PackageReference Include="FastEndpoints.Security" />

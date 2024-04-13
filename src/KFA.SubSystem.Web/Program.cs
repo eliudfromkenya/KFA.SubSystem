@@ -3,6 +3,7 @@ using Ardalis.ListStartupServices;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using FastEndpoints.Swagger;
+using Microsoft.AspNetCore.Antiforgery;
 using KFA.SubSystem.Core;
 using KFA.SubSystem.Globals.Classes;
 using KFA.SubSystem.Infrastructure;
@@ -23,31 +24,40 @@ string? connectionString = builder.Configuration.GetConnectionString("MySQLConne
 LocalCache.ConString = builder.Configuration.GetConnectionString("LiteDB");
 
 LoggerConfiguration logConfig = logConfig = new LoggerConfiguration();
-builder.Host.UseSerilog((_, config) => new LoggerConfiguration()
-               .ReadFrom.Configuration(builder.Configuration)
-               .WriteTo.MySQL(
-                   connectionString: connectionString,
-                   tableName: "sys_logs"));
+builder.Host.UseSerilog((_, config) =>
+{
+  try
+  {
+    new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Configuration)
+                .WriteTo.MySQL(
+                    connectionString: connectionString,
+                    tableName: "sys_logs");
+  }
+  catch { }
+});
 
 Log.Logger = logConfig.CreateBootstrapLogger();
 
 Log.Information("Starting the HostBuilder...");
 
 builder.Services
-   .AddCookieAuth(validFor: TimeSpan.FromMinutes(60))
-   .AddJWTBearerAuth(builder.Configuration["Auth:TokenSigningKey"]!)
+    .AddAuthenticationCookie(validFor: TimeSpan.FromMinutes(60))
+   .AddAuthenticationJwtBearer(s => s.SigningKey = "Token signing key")
    .AddAuthentication(o =>
    {
-     o.DefaultScheme = builder.Configuration["Auth:AuthScheme"];
-     o.DefaultAuthenticateScheme = builder.Configuration["Auth:AuthScheme"];
+     o.DefaultScheme = "Jwt_Or_Cookie";
+     o.DefaultAuthenticateScheme = "Jwt_Or_Cookie";
    })
-   .AddPolicyScheme(builder.Configuration["Auth:AuthScheme"]!, builder.Configuration["Auth:AuthScheme"], o =>
+   .AddPolicyScheme("Jwt_Or_Cookie", "Jwt_Or_Cookie", o =>
    {
      o.ForwardDefaultSelector = ctx =>
      {
        if (ctx.Request.Headers.TryGetValue(HeaderNames.Authorization, out var authHeader) &&
            authHeader.FirstOrDefault()?.StartsWith("Bearer ") is true)
+       {
          return JwtBearerDefaults.AuthenticationScheme;
+       }
        return CookieAuthenticationDefaults.AuthenticationScheme;
      };
    });
@@ -102,7 +112,7 @@ else
   app.UseHsts();
 }
 app//.UseDefaultExceptionHandler()
-   .UseAntiForgery()
+   .UseAntiforgeryFE()
    .UseFastEndpoints(c =>
    {
      c.Endpoints.RoutePrefix = "api/v3";
