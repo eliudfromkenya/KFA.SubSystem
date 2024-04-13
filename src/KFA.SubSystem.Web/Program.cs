@@ -41,9 +41,11 @@ Log.Logger = logConfig.CreateBootstrapLogger();
 
 Log.Information("Starting the HostBuilder...");
 
+var tokenSignature = builder.Configuration.GetValue<string>("Auth:TokenSigningKey");
+
 builder.Services
     .AddAuthenticationCookie(validFor: TimeSpan.FromMinutes(60))
-   .AddAuthenticationJwtBearer(s => s.SigningKey = "Token signing key")
+   .AddAuthenticationJwtBearer(s => s.SigningKey = tokenSignature)
    .AddAuthentication(o =>
    {
      o.DefaultScheme = "Jwt_Or_Cookie";
