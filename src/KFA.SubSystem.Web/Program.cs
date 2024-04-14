@@ -15,6 +15,7 @@ using Microsoft.Net.Http.Headers;
 using MySqlConnector;
 using Serilog;
 using FastEndpoints.Security;
+using KFA.SubSystem;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,7 @@ Log.Logger = logConfig.CreateBootstrapLogger();
 Log.Information("Starting the HostBuilder...");
 
 var tokenSignature = builder.Configuration.GetValue<string>("Auth:TokenSigningKey");
+Declarations.DIServices = builder.Services;
 
 builder.Services
     .AddAuthenticationCookie(validFor: TimeSpan.FromMinutes(60))
@@ -102,6 +104,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 });
 
 var app = builder.Build();
+Declarations.GetServiceScope = app.Services.CreateScope;
 
 if (app.Environment.IsDevelopment())
 {

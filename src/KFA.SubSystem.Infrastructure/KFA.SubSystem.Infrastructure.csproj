@@ -19,10 +19,9 @@
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Serilog" />
     <PackageReference Include="SharpZipLib" />
-    <PackageReference Include="SQLite" />
     <PackageReference Include="System.Linq.Dynamic.Core" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\KFA.SubSystem.Core\KFA.SubSystem.Core.csproj" />
     <ProjectReference Include="..\KFA.SubSystem.UseCases\KFA.SubSystem.UseCases.csproj" />

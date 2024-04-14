@@ -1,5 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Sdk Name="Microsoft.Build.CentralPackageVersions" Version="2.1.3" />
+  <ItemGroup>
+    <None Remove="Resources\SQLTexts\VatEntriesNotInSales.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SQLTexts\VatEntriesNotInSales.sql" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Ardalis.GuardClauses" />
@@ -20,6 +26,10 @@
 
   <ItemGroup>
     <Folder Include="FetchData\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KFA.SubSystem.Globals\KFA.SubSystem.Globals.csproj" />
   </ItemGroup>
 
 </Project>

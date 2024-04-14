@@ -40,7 +40,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\KFA.SubSystem.Globals\KFA.SubSystem.Globals.csproj" />
     <ProjectReference Include="..\KFA.SubSystem.Infrastructure\KFA.SubSystem.Infrastructure.csproj" />
+    <ProjectReference Include="..\KFA.SubSystem.Services\KFA.SubSystem.Services.csproj" />
     <ProjectReference Include="..\KFA.SubSystem.UseCases\KFA.SubSystem.UseCases.csproj" />
   </ItemGroup>
 

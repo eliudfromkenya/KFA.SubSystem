@@ -24,7 +24,8 @@ public static class JsSerializer
 
     if (typeof(T).IsInterface)
     {
-      var type = Declarations.ServiceScope?.ServiceProvider?.GetService<T>()?.GetType();
+      using var serviceScope = Declarations.GetServiceScope?.Invoke();
+      var type = serviceScope?.ServiceProvider?.GetService<T>()?.GetType();
       if (type == null)
         return default;
 

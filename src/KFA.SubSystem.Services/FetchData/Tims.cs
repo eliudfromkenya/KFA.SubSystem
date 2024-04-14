@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace KFA.SubSystem.Services.FetchData;
-internal class Tims
+public class Tims
 {
+
 }

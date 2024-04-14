@@ -11,11 +11,14 @@
     <PackageReference Include="Autofac" />
     <PackageReference Include="Humanizer" />
     <PackageReference Include="Mapster" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
     <PackageReference Include="MonkeyCache.LiteDB" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Serilog" />
+    <PackageReference Include="System.Data.SqlClient" />
     <PackageReference Include="System.Linq.Dynamic.Core" />
     <PackageReference Include="EntityFrameworkCore.DataEncryption" />
+    <PackageReference Include="MySqlConnector" />
   </ItemGroup>
 
 </Project>
