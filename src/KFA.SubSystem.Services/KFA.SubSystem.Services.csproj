@@ -1,10 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Sdk Name="Microsoft.Build.CentralPackageVersions" Version="2.1.3" />
   <ItemGroup>
-    <None Remove="Resources\SQLTexts\VatEntriesNotInSales.sql" />
+    <None Remove="Resources\SQLTexts\SupplierStatementOld.sql" />
+    <None Remove="Resources\SQLTexts\VatIssues.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\SQLTexts\VatEntriesNotInSales.sql" />
+    <EmbeddedResource Include="Resources\SQLTexts\SupplierStatementOld.sql" />
+    <EmbeddedResource Include="Resources\SQLTexts\VatIssues.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,12 +16,15 @@
     <PackageReference Include="Ardalis.SmartEnum" />
     <PackageReference Include="Ardalis.Specification" />
     <PackageReference Include="Autofac" />
+    <PackageReference Include="EPPlus" />
     <PackageReference Include="Humanizer" />
     <PackageReference Include="Mapster" />
     <PackageReference Include="MediatR" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Microsoft.Playwright" />
     <PackageReference Include="MonkeyCache.LiteDB" />
     <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="PdfSharpCore" />
     <PackageReference Include="Serilog" />
     <PackageReference Include="System.Linq.Dynamic.Core" />
   </ItemGroup>

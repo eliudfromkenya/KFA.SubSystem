@@ -20,7 +20,7 @@ namespace KFA.SubSystem.Web.BusinessCentralEndPoints.VAT;
 /// <remarks>
 /// List all cost centres - returns a CostCentreListResponse containing the cost centres.
 /// </remarks>
-public class List(IEndPointManager endPointManager) : Endpoint<VATEntriesNotInSalesRequest, List<LedgerRecord>?>
+public class List(IEndPointManager endPointManager) : Endpoint<VATEntriesNotInSalesRequest,object>
 {
   private const string EndPointId = "BC-VAT-01";
   public const string Route = "/business-central/vat";
@@ -46,11 +46,11 @@ public class List(IEndPointManager endPointManager) : Endpoint<VATEntriesNotInSa
     });
   }
 
-  public override async Task<List<LedgerRecord>?> HandleAsync(VATEntriesNotInSalesRequest request,
+  public override async Task<object> HandleAsync(VATEntriesNotInSalesRequest request,
     CancellationToken cancellationToken)
   {
-    var vat = new KFA.SubSystem.Services.DataAnalysis.VAT();
-    var ans = await vat.GetVATEntriesNotInSales(request.DateFrom, request.DateTo);
+    var ans = await SubSystem.Services.DataAnalysis.VAT.GetVATEntriesNotInSales(request.DateFrom, request.DateTo);
+    await SendBytesAsync(ans!, "VAT Data Analysis.xlsx", cancellation: cancellationToken);
     return ans;
   }
 }

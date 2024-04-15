@@ -10,6 +10,12 @@ namespace KFA.SubSystem.Services;
 
 internal static class ServiceFunctions
 {
+
+  public static byte[]? GetExcelFile(DataTable? table, bool isGeneralLedger = true, bool useMainBranch = true)
+  {
+    return null;
+  }
+
   public static List<LedgerRecord>? GetLedgerRecords(DataTable? table, bool isGeneralLedger = true, bool useMainBranch = true)
   {
     return table?.AsEnumerable().Select(row =>

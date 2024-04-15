@@ -16,6 +16,8 @@ using MySqlConnector;
 using Serilog;
 using FastEndpoints.Security;
 using KFA.SubSystem;
+using KFA.SubSystem.Web.MiddleWare;
+using OfficeOpenXml;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 string? connectionString = builder.Configuration.GetConnectionString("MySQLConnection");
 LocalCache.ConString = builder.Configuration.GetConnectionString("LiteDB");
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 LoggerConfiguration logConfig = logConfig = new LoggerConfiguration();
 builder.Host.UseSerilog((_, config) =>
@@ -46,7 +49,7 @@ var tokenSignature = builder.Configuration.GetValue<string>("Auth:TokenSigningKe
 Declarations.DIServices = builder.Services;
 
 builder.Services
-    .AddAuthenticationCookie(validFor: TimeSpan.FromMinutes(60))
+   .AddAuthenticationCookie(validFor: TimeSpan.FromMinutes(60))
    .AddAuthenticationJwtBearer(s => s.SigningKey = tokenSignature)
    .AddAuthentication(o =>
    {
@@ -121,6 +124,10 @@ app//.UseDefaultExceptionHandler()
    .UseFastEndpoints(c =>
    {
      c.Endpoints.RoutePrefix = "api/v3";
+     c.Endpoints.Configurator = ep =>
+     {
+       ep.Options(b => b.AddEndpointFilter<UnAuthorizedFilter>());
+     };
    });
 
 app.UseSwaggerGen(); // FastEndpoints middleware
