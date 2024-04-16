@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,29 @@ internal static class ServiceFunctions
   public static byte[]? GetExcelFile(DataTable? table, bool isGeneralLedger = true, bool useMainBranch = true)
   {
     return null;
+  }
+
+  public static void OpenExcelFile(byte[] bytes)
+  {
+    try
+    {
+      var path = Path.GetTempPath();
+      var fileName = Path.ChangeExtension(Guid.NewGuid().ToString(), "xlsx");
+      path = Path.Combine(path, fileName);
+      
+      File.WriteAllBytes(path, bytes);
+
+      ProcessStartInfo psi = new ProcessStartInfo
+      {
+        FileName = path,
+        UseShellExecute = true
+      };
+      Process.Start(psi);
+    }
+    catch (Exception ex)
+    {
+      Declarations.DbLogger?.Error(ex.ToString());
+    }
   }
 
   public static List<LedgerRecord>? GetLedgerRecords(DataTable? table, bool isGeneralLedger = true, bool useMainBranch = true)

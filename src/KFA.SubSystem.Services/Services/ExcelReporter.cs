@@ -333,8 +333,8 @@ internal static class ExcelReporter
         sheet.Column(i + 1).Width = sheet.Column(i + 1).Width + 5;
     }
 
-    var file = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "VAT Issues.xlsx"));
-    excel.SaveAs(file);
-    return excel.GetAsByteArray();
+    var bytes = excel.GetAsByteArray();
+    ServiceFunctions.OpenExcelFile(bytes);
+    return bytes;
   }
 }
