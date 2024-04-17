@@ -36,7 +36,7 @@ internal static class ExcelStatement
                 invoices.AsEnumerable().Select(c => c["supplier_code"]?.ToString()).Concat(
                 journals.AsEnumerable().Select(c => c["credit_ledger_account_code"]?.ToString()).Concat(
                 journals.AsEnumerable().Select(c => c["debit_ledger_account_code"]?.ToString())))))))
-      .Where(m => m?.StartsWith(supplierPrefix) ?? false).Distinct().OrderBy(mbox => mbox).ToList();
+      .Where(m => m?.StartsWith(supplierPrefix) ?? false).Distinct().Select(h => h?.ToUpper()).OrderBy(mbox => mbox).ToList();
 
     var xItems = stockItems.AsEnumerable().Select(x => new
     {
@@ -57,13 +57,14 @@ internal static class ExcelStatement
       Name = x[1].ToString()
     }).ToArray();
 
-    var codeWithBranch = codes.Select(c => c?[..3]).Distinct()
+    var codeWithBranch = codes
       .Select(c =>
       new
       {
-        Prefix = c,
-        Supplier
-      }).ToList();
+        Prefix = c?[..3],
+        SupplierCode = c,
+        Branch = xCostCentres.FirstOrDefault(x => c?[..3] == x.Prefix)
+      }).GroupBy(c => c.Prefix).ToList();
 
     //var codeWithBranch = codes.Select(c =>
     //(SupplierCode: c, Branch: xCostCentres.FirstOrDefault(x => c?.ToLower()?.StartsWith(x.Prefix?.ToLower() ?? "") ?? false))).GroupBy(c => c.Branch?.Code).ToArray();
@@ -84,7 +85,7 @@ internal static class ExcelStatement
     table.Columns.Add("Cheques Count", typeof(int));
     table.Columns.Add("Petty Cash Count", typeof(int));
     table.Columns.Add("Invoices Count", typeof(int));
-    table.Columns.Add("Net Change Count", typeof(int));    
+    table.Columns.Add("Net Change Count", typeof(int));
     table.Columns.Add("Cheques", typeof(decimal));
     table.Columns.Add("Petty Cash", typeof(decimal));
     table.Columns.Add("Receipts", typeof(decimal));
@@ -100,23 +101,23 @@ internal static class ExcelStatement
       var range = detailedSheet.Cells[$"A{currentRow}:{toChar}{currentRow}"];
       detailedSheet.Row(currentRow).Height = 20;
       range.Merge = true;
-      range.Value = $"{code.Key} - {code.FirstOrDefault().Branch?.Name ?? ""}";
+      range.Value = $"{code.Key} - {code.FirstOrDefault()?.Branch?.Name ?? ""}";
       detailedSheet.Row(currentRow).Style.Font.Size = 24;
       detailedSheet.Row(currentRow).Style.Font.Color.SetColor(Color.DarkBlue);
       detailedSheet.Row(currentRow).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
       detailedSheet.Row(currentRow).Style.Font.Bold = true;
 
       //int count = 1;
-      foreach (var (SupplierCode, Branch) in code)
+      foreach (var obj in code)
       {
         var row = table.NewRow();
         table.Rows.Add(row);
 
-        var supplierCode = SupplierCode;
+        var supplierCode = obj.SupplierCode;
         var supplierName = xLedgerAccounts.FirstOrDefault(c => c.Code == supplierCode)?.Name;
-        var branchPrefix = Branch?.Prefix;
-        var branchName = Branch?.Name;
-        var branchCode = Branch?.Code;
+        var branchPrefix = obj.Prefix;
+        var branchName = obj.Branch?.Name;
+        var branchCode = obj.Branch?.Code;
 
         row["Branch Code"] = branchCode;
         row["Branch Name"] = branchName;
@@ -237,7 +238,7 @@ internal static class ExcelStatement
         {
           sheet.Cells[$"{toCharLetter}{currentRow + 1}:{toCharLetter}{currentRow + 1}"].Formula = $"SUM({toCharLetter}{rowStart}:{toCharLetter}{currentRow})";
           sheet.Cells[$"{toCharLetter}{rowStart}:{toCharLetter}{currentRow + 2}"].Style.Numberformat.Format = "#,##0.00";
-         
+
           var rng = sheet.Cells[$"{toCharLetter}{currentRow + 1}:{toCharLetter}{currentRow + 1}"];
           rng.Style.Fill.PatternType = ExcelFillStyle.LightUp;
           rng.Style.Fill.BackgroundColor.SetColor(Color.LightPink);
@@ -537,7 +538,7 @@ internal static class ExcelStatement
       journalsSet.ToList().ForEach(row =>
       {
         currentRow++;
-       
+
         detailedSheet.Cells[$"A{currentRow}:A{currentRow}"].Value = row["batch_key"];
         detailedSheet.Cells[$"B{currentRow}:B{currentRow}"].Value = row["month"];
         detailedSheet.Cells[$"C{currentRow}:C{currentRow}"].Value = row["date"];
@@ -623,7 +624,7 @@ internal static class ExcelStatement
       detailedSheet.Cells[$"G{currentRow + 1}:H{currentRow + 1}"].Style.Font.UnderLineType = ExcelUnderLineType.DoubleAccounting;
       detailedSheet.Cells[$"G{currentRow + 1}:H{currentRow + 1}"].Style.Numberformat.Format = "#,##0.00";
       detailedSheet.Cells[$"G{currentRow + 1}:H{currentRow + 1}"].Style.Fill.PatternType = ExcelFillStyle.LightUp;
-      detailedSheet.Cells[$"G{currentRow + 1}:H{currentRow + 1}"].Style.Fill.BackgroundColor.SetColor(Color.LightPink);     
+      detailedSheet.Cells[$"G{currentRow + 1}:H{currentRow + 1}"].Style.Fill.BackgroundColor.SetColor(Color.LightPink);
     }
     return (currentRow += 2);
   }

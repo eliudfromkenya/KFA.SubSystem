@@ -25,7 +25,7 @@ namespace KFA.SubSystem.Web.KFAInternalSystemsEndPoints;
 public class ExcelSupplierTransactionsEndPoint(IEndPointManager endPointManager) : Endpoint<ExcelSupplierTransactionsRequest, byte[]>
 {
   private const string EndPointId = "KFA-01";
-  public const string Route = "/kfa-internal-systems/vat";
+  public const string Route = "/kfa-internal-systems/supplier-transactions";
 
   public override void Configure()
   {
