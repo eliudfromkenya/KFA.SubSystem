@@ -43,8 +43,9 @@ public static class Functions
     if (name == "MySQLConnection")
     {
       var db = reader["KFASubSystemDatabase"];
-      ans += $"database={db};ConvertZeroDateTime=True;AllowUserVariables=True;";
+      ans += $";database={db};ConvertZeroDateTime=True;AllowUserVariables=True;";
     }
+    Console.WriteLine(ans);
     return ans;
   }
   public static string GetMonthsFormated(int? year, int? month)
