@@ -55,8 +55,7 @@ public static class MySQLDbService
   {
     get
     {
-      var config = Functions.ResolveObject<IConfiguration>();
-      var conString = Functions.GetEnviromentVariable("MySQLConnection");
+      var conString = Functions.GetEnviromentVariable("KFASubSystemDatabase");
       return new MySqlConnection(conString);
     }
   }
