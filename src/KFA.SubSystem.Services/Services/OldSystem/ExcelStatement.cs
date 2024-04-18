@@ -175,18 +175,17 @@ internal static class ExcelStatement
           currentRow = UpdateCheques(detailedSheet, chequesSet, currentRow, toChar);
         if (pettyCashSet.Length != 0)
           currentRow = UpdatePettyCash(detailedSheet, pettyCashSet, currentRow, toChar);
-      }
-      table.Columns.Remove("Branch Code");
-      table.Columns.Remove("Branch Name");
-      table.Columns.Remove("Receipts Count");
-      table.Columns.Remove("Journals Count");
-      table.Columns.Remove("Cheques Count");
-      table.Columns.Remove("Petty Cash Count");
-      table.Columns.Remove("Invoices Count");
-      table.Columns.Remove("Net Change Count");
-      table.Columns.Remove("Receipts");
+      }      
     }
-
+    table.Columns.Remove("Branch Code");
+    table.Columns.Remove("Branch Name");
+    table.Columns.Remove("Receipts Count");
+    table.Columns.Remove("Journals Count");
+    table.Columns.Remove("Cheques Count");
+    table.Columns.Remove("Petty Cash Count");
+    table.Columns.Remove("Invoices Count");
+    table.Columns.Remove("Net Change Count");
+    table.Columns.Remove("Receipts");
     {
       var cols = table.Columns.OfType<DataColumn>().ToList();
       var sheet = ExcelReporter.CreateWorkSheet(ref excel, table.TableName, $"Period: {from:dd-MM-yyyy} to {to:dd-MM-yyyy}", cols.Count);

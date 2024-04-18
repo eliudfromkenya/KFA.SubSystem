@@ -2,6 +2,7 @@
 using FastEndpoints.Security;
 using KFA.SubSystem.Core;
 using KFA.SubSystem.Core.DTOs;
+using KFA.SubSystem.Globals;
 using KFA.SubSystem.Infrastructure.Services;
 using KFA.SubSystem.UseCases.Users;
 using MediatR;
@@ -36,7 +37,7 @@ public class Register(IMediator mediator, IConfiguration config) : Endpoint<Regi
     RegisterRequest request,
     CancellationToken cancellationToken)
   {
-    var tokenSignature = _config.GetValue<string>("Auth:TokenSigningKey");
+    var tokenSignature = Functions.GetEnviromentVariable("AuthTokenSigningKey");
     var userDTO = new SystemUserDTO
     {
       Contact = request.Contact,

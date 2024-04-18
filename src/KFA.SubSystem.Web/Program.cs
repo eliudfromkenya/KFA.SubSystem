@@ -18,13 +18,17 @@ using FastEndpoints.Security;
 using KFA.SubSystem;
 using KFA.SubSystem.Web.MiddleWare;
 using OfficeOpenXml;
+using DotEnv.Core;
+using KFA.SubSystem.Globals;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
-string? connectionString = builder.Configuration.GetConnectionString("MySQLConnection");
-LocalCache.ConString = builder.Configuration.GetConnectionString("LiteDB");
+new EnvLoader().Load();
+
+string? connectionString = Functions.GetEnviromentVariable("MySQLConnection");
+LocalCache.ConString = Functions.GetEnviromentVariable("LiteDB");
 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 LoggerConfiguration logConfig = logConfig = new LoggerConfiguration();
@@ -45,7 +49,7 @@ Log.Logger = logConfig.CreateBootstrapLogger();
 
 Log.Information("Starting the HostBuilder...");
 
-var tokenSignature = builder.Configuration.GetValue<string>("Auth:TokenSigningKey");
+var tokenSignature = Functions.GetEnviromentVariable("AuthTokenSigningKey");
 Declarations.DIServices = builder.Services;
 
 builder.Services

@@ -13,6 +13,7 @@ using System.Text;
 using Org.BouncyCastle.Ocsp;
 using System.Security;
 using System.Diagnostics.CodeAnalysis;
+using KFA.SubSystem.Globals;
 
 namespace KFA.SubSystem.Web.UserEndPoints;
 
@@ -54,7 +55,7 @@ public class Login : Endpoint<LoginRequest, LoginResponse>
     LoginRequest request,
     CancellationToken cancellationToken)
   {
-    var tokenSignature = Config.GetValue<string>("Auth:TokenSigningKey");
+    var tokenSignature = Functions.GetEnviromentVariable("AuthTokenSigningKey");
 
     var command = new UserLoginCommand(request.Username!, request.Password!, request.Device);
     Result<LoginResult>? result = null;

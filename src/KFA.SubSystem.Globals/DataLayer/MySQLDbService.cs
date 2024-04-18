@@ -56,7 +56,7 @@ public static class MySQLDbService
     get
     {
       var config = Functions.ResolveObject<IConfiguration>();
-      var conString = config!.GetConnectionString("MySQLConnection");
+      var conString = Functions.GetEnviromentVariable("MySQLConnection");
       return new MySqlConnection(conString);
     }
   }

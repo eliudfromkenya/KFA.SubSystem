@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Reflection;
 using System.Text;
 using Ardalis.SharedKernel;
+using DotEnv.Core;
 using Humanizer;
 using KFA.SubSystem;
 using KFA.SubSystem.Core.Classes;
@@ -35,7 +36,11 @@ public static class Functions
   public static Func<int, int, string> AsMonthString =
  (yy, mm) => GetMonthsFormated(yy, mm);
 
-
+  public static string GetEnviromentVariable(string name)
+  {
+    var reader = new EnvReader();
+    return reader[name];
+  }
   public static string GetMonthsFormated(int? year, int? month)
   {
     if (year < 100)

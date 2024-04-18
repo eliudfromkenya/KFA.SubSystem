@@ -340,3 +340,6 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /Src/Kfa.SubSystems after chages.zip
+
+#Enviroment Variables
+.env

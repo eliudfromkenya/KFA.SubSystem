@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Ardalis.SharedKernel" />
     <PackageReference Include="Autofac" />
+    <PackageReference Include="DotEnv.Core" />
     <PackageReference Include="Humanizer" />
     <PackageReference Include="Mapster" />
     <PackageReference Include="Microsoft.Extensions.Configuration" />
