@@ -21,18 +21,18 @@ internal static class ServiceFunctions
   {
     try
     {
-      var path = Path.GetTempPath();
-      var fileName = Path.ChangeExtension(Guid.NewGuid().ToString(), "xlsx");
-      path = Path.Combine(path, fileName);
+      //var path = Path.GetTempPath();
+      //var fileName = Path.ChangeExtension(Guid.NewGuid().ToString(), "xlsx");
+      //path = Path.Combine(path, fileName);
       
-      File.WriteAllBytes(path, bytes);
+      //File.WriteAllBytes(path, bytes);
 
-      ProcessStartInfo psi = new ProcessStartInfo
-      {
-        FileName = path,
-        UseShellExecute = true
-      };
-      Process.Start(psi);
+      //ProcessStartInfo psi = new ProcessStartInfo
+      //{
+      //  FileName = path,
+      //  UseShellExecute = true
+      //};
+      //Process.Start(psi);
     }
     catch (Exception ex)
     {

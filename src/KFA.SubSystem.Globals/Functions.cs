@@ -39,7 +39,13 @@ public static class Functions
   public static string GetEnviromentVariable(string name)
   {
     var reader = new EnvReader();
-    return reader[name];
+    var ans = reader[name];
+    if (name == "MySQLConnection")
+    {
+      var db = reader["KFASubSystemDatabase"];
+      ans += $"database={db};ConvertZeroDateTime=True;AllowUserVariables=True;";
+    }
+    return ans;
   }
   public static string GetMonthsFormated(int? year, int? month)
   {
