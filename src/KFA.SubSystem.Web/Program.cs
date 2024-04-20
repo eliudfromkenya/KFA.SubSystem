@@ -27,7 +27,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 new EnvLoader().Load();
 
-string? connectionString = Functions.GetEnviromentVariable("KFASubSystemDatabase");
+string? connectionString = Functions.GetEnviromentVariable("KFASubSystemMySQLDatabase");
 LocalCache.ConString = Functions.GetEnviromentVariable("LiteDB");
 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 

@@ -39,8 +39,8 @@ public static class Functions
   public static string GetEnviromentVariable(string name)
   {
     var reader = new EnvReader();
-    var ans = reader[name];
-    if (name == "KFASubSystemDatabase")
+    var ans = reader[name]?.Replace("~", "#") ?? string.Empty;
+    if (name == "KFASubSystemMySQLDatabase")
     {
       var objs = ans.Split(';');
       ans = $"server={objs[0]};port={objs[1]};database={objs[2]};user={objs[3]};password={objs[4]};ConvertZeroDateTime=True;AllowUserVariables=True;";
